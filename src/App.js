@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Form from './components/Form'
+import { UsernameForm } from './components/UsernameForm'
 
 function App() {
 
   return (
-    <div className="App">
-      <Form />
+    <div className="app-body">
+      <UsernameForm /> 
     </div>
   );
 }
