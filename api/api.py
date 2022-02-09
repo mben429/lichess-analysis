@@ -2,8 +2,6 @@ import requests
 from flask import Flask
 import numpy as np
 import pandas as pd
-import chess
-import chess.pgn
 import json
 from flask.globals import request
 
@@ -17,7 +15,7 @@ def get_chess_game_data():
     print(username)
 
     URL = "http://lichess.org/api/games/user/{}".format(username)
-    PARAMS = {'moves': 'true', 'max': '100', 'opening': 'true'}
+    PARAMS = {'moves': 'true', 'max': '1', 'opening': 'true'}
     HEADERS = {"Accept": "application/x-ndjson"}
 
     r = requests.get(url=URL, params = PARAMS, headers=HEADERS)
@@ -25,6 +23,8 @@ def get_chess_game_data():
     r_text = r.content.decode("utf-8")
     games_list = [json.loads(s) for s in r_text.split("\n")[:-1]]
     json_games = json.dumps(games_list)
+
+    print("Games: ", json_games)
 
     return json_games
     

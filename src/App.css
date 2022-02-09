@@ -1,10 +1,7 @@
 body{ 
   background: rgb(11, 25, 41);
   overflow: auto;
-}
-
-.app-body{ 
-  color: RGB(201, 200, 200);
+  color: rgb(219, 219, 219);
 }
 
 .center-screen {
@@ -17,7 +14,7 @@ body{
 }
 
 .homepage-title {
-  font-size: 4em;
+  font-size: 5em;
 }
 
 #enter-username-text {
@@ -26,13 +23,34 @@ body{
   color: RGB(201, 200, 200);;
 }
 
-#gen-insights-btn {
+.general-btn {
   display: block;
   margin-top: 2em;
   background-color: rgb(93, 142, 36); 
 }
 
 .other-color {
-  color:rgb(93, 142, 36)
+  color:rgb(93, 142, 36);
 }
 
+.block {
+  background-color:RGB(201, 200, 200);
+}
+
+.sub {
+  font-size: 0.8em;
+}
+
+.half-width-img {
+  max-width: 18%;
+  background-color: white;
+  padding: 1em;
+  border-radius: 4em;
+  border-style: solid;
+  border-color: rgb(93, 142, 36);
+  border-width: 0.1em;
+}
+
+a {
+  color: rgb(93, 142, 36);
+}
