@@ -12,10 +12,9 @@ def get_chess_game_data():
 
     # Username from react form
     username = request.json
-    print(username)
 
     URL = "http://lichess.org/api/games/user/{}".format(username)
-    PARAMS = {'moves': 'true', 'max': '1', 'opening': 'true'}
+    PARAMS = {'moves': 'true', 'max': '100', 'opening': 'true', 'perfType': '[bullet, blitz, rapid, classical]', 'rated': 'true'}
     HEADERS = {"Accept": "application/x-ndjson"}
 
     r = requests.get(url=URL, params = PARAMS, headers=HEADERS)
@@ -24,36 +23,4 @@ def get_chess_game_data():
     games_list = [json.loads(s) for s in r_text.split("\n")[:-1]]
     json_games = json.dumps(games_list)
 
-    print("Games: ", json_games)
-
     return json_games
-    
-    
-
-def gamedata_to_json(gamedata):
-    game_data_df = pd.DataFrame(columns=[
-        "Event", 
-        "Site", 
-        "Date", 
-        "White",
-        "Black",
-        "Result",
-        "UTCDate",
-        "UTCTime",
-        "WhiteElo",
-        "BlackElo",
-        "WhiteRatingDiff",
-        "BlackRatingDiff",
-        "Variant",
-        "TimeControl",
-        "ECO",
-        "Opening",
-        "Termination"
-        ])
-
-
-    
-
-    
-
-

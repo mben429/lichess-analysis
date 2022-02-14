@@ -17,24 +17,24 @@ body{
   font-size: 5em;
 }
 
+.vis-title {
+  font-size: 3.5em;
+  padding-left: 0.3em;
+}
+
 #enter-username-text {
   display: block;
   text-align: center;
-  color: RGB(201, 200, 200);;
+  color: rgb(201, 200, 200);;
 }
 
-.general-btn {
-  display: block;
-  margin-top: 2em;
-  background-color: rgb(93, 142, 36); 
-}
 
 .other-color {
-  color:rgb(93, 142, 36);
+  color:rgb(249, 1, 64);
 }
 
 .block {
-  background-color:RGB(201, 200, 200);
+  background-color:rgb(201, 200, 200);
 }
 
 .sub {
@@ -42,15 +42,29 @@ body{
 }
 
 .half-width-img {
-  max-width: 18%;
+  max-width: 15%;
   background-color: white;
-  padding: 1em;
-  border-radius: 4em;
-  border-style: solid;
-  border-color: rgb(93, 142, 36);
-  border-width: 0.1em;
+  padding: 1.5em;
+  border-radius: 10em;
 }
 
 a {
-  color: rgb(93, 142, 36);
+  color: rgb(249, 1, 64);
 }
+
+.paper-txt {
+  color: rgb(219, 219, 219);
+}
+
+.lft-txt {
+  padding-left: 20px;
+}
+
+.fill-container {
+  height: 100%;
+}
+
+.sm-paper-txt-title {
+  font-size: 1.1em;
+}
+

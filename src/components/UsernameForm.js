@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
-import { VisualizeData } from './VisualizeData';
-import { App } from '../App';
 import { usePromiseTracker } from "react-promise-tracker";
 import { trackPromise } from 'react-promise-tracker';
 import '../App.css';
@@ -61,7 +59,7 @@ export function UsernameForm() {
                         <div>
                             <img src={require('../images/lichess_logo.png')} className="half-width-img"></img>
                         </div>
-                        <h1 className="homepage-title">Lichess Insights Generator<span className="other-color">.</span></h1>
+                        <h1 className="homepage-title">Lichess<span className="other-color">.</span>org Insights Generator<span className="other-color">.</span></h1>
                         <h3>Enter your <span><a href="https://lichess.org/" target="_blank">Lichess.org</a></span> account username, and get access to interesting insights from your last <span className="other-color">100 games</span>.</h3>
                         <h3>If you do not have a lichess account, enter '<span className="other-color">melogm</span>' for a demo.</h3>
                         <TextField
@@ -77,7 +75,6 @@ export function UsernameForm() {
                             focused
                         />
                         <Button 
-                            className="general-btn" 
                             variant="contained"
                             type="submit"
                             color="success"
@@ -90,6 +87,5 @@ export function UsernameForm() {
             </div>
         </div>
       );
-    
 }
 
