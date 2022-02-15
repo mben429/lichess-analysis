@@ -8,7 +8,9 @@ import { createTheme } from '@mui/material/styles';
 import { Bar, Line, Doughnut} from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded';
-
+import ArrowDownwardRoundedIcon from '@mui/icons-material/ArrowDownwardRounded';
+import BlockRoundedIcon from '@mui/icons-material/BlockRounded';
+import CodeRoundedIcon from '@mui/icons-material/CodeRounded';
 
 // THIS WORKS!
 // NEXT STEP: 
@@ -153,16 +155,32 @@ export function VisualizeData() {
     }
 
     const getEloDiffs = (elo_arr) => {
-        let bullet_diff = elo_arr[0][0] - elo_arr[0][elo_arr[0].length-1];
-        let blitz_diff = elo_arr[1][0] - elo_arr[1][elo_arr[1].length-1];
-        let rapid_diff = elo_arr[2][0] - elo_arr[2][elo_arr[2].length-1];
-        let classical_diff = elo_arr[3][0] - elo_arr[3][elo_arr[3].length-1];
+        let bullet_diff = elo_arr[0][elo_arr[0].length-1] - elo_arr[0][0];
+        let blitz_diff =  elo_arr[1][elo_arr[1].length-1] - elo_arr[1][0];
+        let rapid_diff = elo_arr[2][elo_arr[2].length-1] - elo_arr[2][0];
+        let classical_diff = elo_arr[3][elo_arr[3].length-1] - elo_arr[3][0];
 
         let diff_arr = [bullet_diff, blitz_diff, rapid_diff, classical_diff];
 
         return diff_arr;
     }
 
+    const getArrowType = (diff_val) => {
+
+        if (diff_val > 0) {
+            return <ArrowUpwardRoundedIcon color="success" fontSize="large"/>
+        }
+        else if (diff_val < 0) {
+            return <ArrowDownwardRoundedIcon color="error" fontSize="large" />
+        }
+        else if (diff_val == 0) {
+            return <CodeRoundedIcon color="warning" fontSize="large" />
+        }
+        else {
+            return <BlockRoundedIcon color="info" fontSize="large"/>
+        }
+
+    }
 
 
     return (
@@ -213,10 +231,13 @@ export function VisualizeData() {
                                         <Box className="paper-txt" sx={{ width: 1 }}>
                                             <Box display="grid" gridTemplateRows="repeat(3, 1fr)" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
                                                 <Box gridColumn="span 12" gridRow="span 1">
-                                                    <div className="sm-paper-txt-title">Bullet rating change</div>
+                                                    <div className="sm-paper-txt-title">Bullet Rating Diff</div>
                                                 </Box>
-                                                <Box gridColumn="span 4">
-                                                    <div>xs=8</div>
+                                                <Box gridColumn="span 1" gridRow="span 2">
+                                                    {getArrowType(getEloDiffs(getEloRatingArray())[0])}
+                                                </Box>
+                                                <Box gridColumn="span 2" gridRow="span 2">
+                                                    <div className="paper-txt-num">{getEloDiffs(getEloRatingArray())[0]}</div>
                                                 </Box>
                                             </Box>
                                         </Box>
@@ -229,6 +250,19 @@ export function VisualizeData() {
                                             padding: 1
                                         }}
                                     >
+                                        <Box className="paper-txt" sx={{ width: 1 }}>
+                                            <Box display="grid" gridTemplateRows="repeat(3, 1fr)" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+                                                <Box gridColumn="span 12" gridRow="span 1">
+                                                    <div className="sm-paper-txt-title">Blitz Rating Diff</div>
+                                                </Box>
+                                                <Box gridColumn="span 1" gridRow="span 2">
+                                                    {getArrowType(getEloDiffs(getEloRatingArray())[1])}
+                                                </Box>
+                                                <Box gridColumn="span 2" gridRow="span 2">
+                                                    <div className="paper-txt-num">{getEloDiffs(getEloRatingArray())[1]}</div>
+                                                </Box>
+                                            </Box>
+                                        </Box>
 
                                     </Paper>
                                     <Paper
@@ -239,6 +273,19 @@ export function VisualizeData() {
                                             padding: 1
                                         }}
                                     >
+                                        <Box className="paper-txt" sx={{ width: 1 }}>
+                                            <Box display="grid" gridTemplateRows="repeat(3, 1fr)" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+                                                <Box gridColumn="span 12" gridRow="span 1">
+                                                    <div className="sm-paper-txt-title">Rapid Rating Diff</div>
+                                                </Box>
+                                                <Box gridColumn="span 1" gridRow="span 2">
+                                                    {getArrowType(getEloDiffs(getEloRatingArray())[2])}
+                                                </Box>
+                                                <Box gridColumn="span 2" gridRow="span 2">
+                                                    <div className="paper-txt-num">{getEloDiffs(getEloRatingArray())[2]}</div>
+                                                </Box>
+                                            </Box>
+                                        </Box>
 
                                     </Paper>
                                     <Paper
@@ -249,6 +296,19 @@ export function VisualizeData() {
                                             padding: 1
                                         }}
                                     >
+                                        <Box className="paper-txt" sx={{ width: 1 }}>
+                                            <Box display="grid" gridTemplateRows="repeat(3, 1fr)" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+                                                <Box gridColumn="span 12" gridRow="span 1">
+                                                    <div className="sm-paper-txt-title">Classical Rating Diff</div>
+                                                </Box>
+                                                <Box gridColumn="span 1" gridRow="span 2">
+                                                    {getArrowType(getEloDiffs(getEloRatingArray())[3])}
+                                                </Box>
+                                                <Box gridColumn="span 2" gridRow="span 2">
+                                                    <div className="paper-txt-num">{getEloDiffs(getEloRatingArray())[3]}</div>
+                                                </Box>
+                                            </Box>
+                                        </Box>
 
                                     </Paper>
                                 </Stack>
