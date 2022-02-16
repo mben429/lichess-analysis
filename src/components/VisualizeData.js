@@ -351,7 +351,7 @@ export function VisualizeData() {
                                         <Box className="paper-txt" sx={{ width: 1 }}>
                                             <Box display="grid" gridTemplateRows="repeat(2, 1fr)" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
                                                 <Box gridColumn="span 12" gridRow="span 1">
-                                                    <div className="sm-paper-txt-title">Average Bullet Rating.</div>
+                                                    <div className="sm-paper-txt-title">Average Bullet Rating</div>
                                                 </Box>
                                                 <Box gridColumn="span 1" gridRow="span 2" className="paper-txt-num">
                                                     {getRatingAvg(getEloRatingArray())[0]}
@@ -372,7 +372,7 @@ export function VisualizeData() {
                                         <Box className="paper-txt" sx={{ width: 1 }}>
                                             <Box display="grid" gridTemplateRows="repeat(3, 1fr)" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
                                                 <Box gridColumn="span 12" gridRow="span 1">
-                                                    <div className="sm-paper-txt-title">Average Bullet Rating.</div>
+                                                    <div className="sm-paper-txt-title">Average Blitz Rating</div>
                                                 </Box>
                                                 <Box gridColumn="span 1" gridRow="span 2" className="paper-txt-num">
                                                     {getRatingAvg(getEloRatingArray())[1]}
@@ -392,7 +392,7 @@ export function VisualizeData() {
                                         <Box className="paper-txt" sx={{ width: 1 }}>
                                             <Box display="grid" gridTemplateRows="repeat(3, 1fr)" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
                                                 <Box gridColumn="span 12" gridRow="span 1">
-                                                    <div className="sm-paper-txt-title">Average Bullet Rating.</div>
+                                                    <div className="sm-paper-txt-title">Average Rapid Rating</div>
                                                 </Box>
                                                 <Box gridColumn="span 1" gridRow="span 2" className="paper-txt-num">
                                                     {getRatingAvg(getEloRatingArray())[2]}
@@ -412,10 +412,10 @@ export function VisualizeData() {
                                         <Box className="paper-txt" sx={{ width: 1 }}>
                                             <Box display="grid" gridTemplateRows="repeat(3, 1fr)" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
                                                 <Box gridColumn="span 12" gridRow="span 1">
-                                                    <div className="sm-paper-txt-title">Average Bullet Rating.</div>
+                                                    <div className="sm-paper-txt-title">Average Classical Rating</div>
                                                 </Box>
                                                 <Box gridColumn="span 1" gridRow="span 2" className="paper-txt-num">
-                                                    {getRatingAvg(getEloRatingArray())[1]}
+                                                    {getRatingAvg(getEloRatingArray())[3]}
                                                 </Box>
                                             </Box>
                                         </Box>
