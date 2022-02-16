@@ -42,25 +42,34 @@ export function VisualizeData() {
         }
     })
 
+    const checkUserColor = (curr_game) => {
+        if (curr_game.players.black.user.name == username) {
+            return "black";
+        }
+        else {
+            return "white";
+        }
+    }
+
 
     // Get player ratings
-    const getUserRating = (username, players_data, player) => {
+    const getUserRating = (curr_game, player) => {
 
-        if (players_data.black.user.name == username) {
+        if (checkUserColor(curr_game) == "black") {
             if (player == "user"){
-                return players_data.black.rating + players_data.black.ratingDiff;
+                return curr_game.players.black.rating + curr_game.players.black.ratingDiff;
             }
             else if (player == "opp"){
-                return players_data.white.rating + players_data.white.ratingDiff;
+                return curr_game.players.white.rating + curr_game.players.white.ratingDiff;
             }
         }
 
         else {
             if (player == "user"){
-                return players_data.white.rating + players_data.white.ratingDiff;
+                return curr_game.players.white.rating + curr_game.players.white.ratingDiff;
             }
             else if (player == "opp"){
-                return players_data.black.rating + players_data.black.ratingDiff;
+                return curr_game.players.black.rating + curr_game.players.black.ratingDiff;
             }
         }
     }
@@ -70,7 +79,7 @@ export function VisualizeData() {
     }
 
     // Retrieve elo array for bullet, blitz, classical and rapid
-    function getEloRatingArray() {
+    const getEloRatingArray = () => {
         
         let elo_2d_arr = [];
         let elo_arr_bullet = [], elo_arr_blitz = [], elo_arr_rapid = [], elo_arr_classical = [];
@@ -81,16 +90,16 @@ export function VisualizeData() {
             curr_game = game_data[i];
 
             if (getGameType(curr_game) == 'bullet') {
-                elo_arr_bullet.push(getUserRating(username, curr_game.players, "user"));
+                elo_arr_bullet.push(getUserRating(curr_game, "user"));
             }
             else if (getGameType(curr_game) == 'blitz') {
-                elo_arr_blitz.push(getUserRating(username, curr_game.players, "user"));
+                elo_arr_blitz.push(getUserRating(curr_game, "user"));
             }
             else if (getGameType(curr_game) == 'rapid') {
-                elo_arr_rapid.push(getUserRating(username, curr_game.players, "user"));
+                elo_arr_rapid.push(getUserRating(curr_game, "user"));
             }
             else if (getGameType(curr_game) == 'classical') {
-                elo_arr_classical.push(getUserRating(username, curr_game.players, "user"));
+                elo_arr_classical.push(getUserRating(curr_game, "user"));
             }
         }
         elo_2d_arr.push(elo_arr_bullet.reverse(), elo_arr_blitz.reverse(), elo_arr_rapid.reverse(), elo_arr_classical.reverse());
@@ -100,14 +109,13 @@ export function VisualizeData() {
 
     }
 
-    function getLabelEloProg(){
+    const getLabelEloProg = () => {
         let label_arr = [];
         for (let i = 1; i <= 100; i+=1){
             label_arr.push(i);
         }
         return label_arr;
-    }    
-
+    }   
 
     const elo_prog_chart_data = {
         labels: getLabelEloProg(),
@@ -179,7 +187,6 @@ export function VisualizeData() {
         else {
             return <BlockRoundedIcon color="info" fontSize="large"/>
         }
-
     }
 
     const averageArr = (arr) => {
@@ -195,11 +202,109 @@ export function VisualizeData() {
         return rating_avg_arr;
     }
 
+    const getOpeningsDataObj = () => {
+        let opening_arr_white = [], openings_arr_black = [];
+        let curr_game;
+
+        for (let i = 0; i < game_data.length; i++) {
+            curr_game = game_data[i];
+
+            if (checkUserColor(curr_game) == "white") {
+                opening_arr_white.push(curr_game.opening.name);
+            }
+            else {
+                openings_arr_black.push(curr_game.opening.name);
+            }            
+        }
+        console.log("YO", [opening_arr_white, openings_arr_black])
+
+        return [opening_arr_white, openings_arr_black];
+    }
+
+    const getDictVals = (count_dict, count_dict_op_top5) => {
+        let count_dict_freq_top5 = [];
+        for (let i = 0; i < count_dict_op_top5.length; i++) {
+            count_dict_freq_top5.push(count_dict[count_dict_op_top5[i]]);
+        }
+        return count_dict_freq_top5;
+    }
+
+    const getOpeningsCounts = (openings_arr) => {
+        let count_dict = {}
+
+        for (let opening of openings_arr) {
+            if (count_dict[opening]) {
+                count_dict[opening] += 1;
+            }
+            else {
+                count_dict[opening] = 1;
+            }
+        }
+
+        let count_dict_op_top5 = Object.keys(count_dict);
+        let count_dict_freq_top5 = getDictVals(count_dict, count_dict_op_top5);
+
+
+
+        return [count_dict_op_top5, count_dict_freq_top5];
+
+    }
+
+    const common_openings_white_chart_data = {
+        labels: getOpeningsCounts(getOpeningsDataObj()[0])[0],
+        datasets: [
+            {
+                barPercentage: 0.05,
+                barThickness: 10,
+                backgroundColor: "rgba(240, 240, 240, 0.7)",
+                hoverBackgroundColor: "rgba(249, 0, 64, 1)",
+                data: getOpeningsCounts(getOpeningsDataObj()[0])[1]
+            }
+        ]
+    }
+
+    const common_openings_chart_options = {
+        scales:{
+            xAxes:{
+                title: {
+                    display: true,
+                    text: 'Opening'
+                }
+            },
+            yAxes: {
+                title: {
+                    display: true,
+                    text: 'Frequency'
+                }
+            }
+        },
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            }
+        }
+    }
+
+    const common_openings_black_chart_data = {
+        labels: getOpeningsCounts(getOpeningsDataObj()[1])[0],
+        datasets: [
+            {
+                barPercentage: 0.05,
+                barThickness: 10,
+                backgroundColor: "rgba(0, 0, 0, 0.7)",
+                hoverBackgroundColor: "rgba(249, 0, 64, 1)",
+                data: getOpeningsCounts(getOpeningsDataObj()[1])[1]
+            }
+        ]
+    }
+
 
     return (
             <ThemeProvider theme={theme}>
                 <Stack spacing={3}>
-                    <h1 className="vis-title">Welcome, <span className="other-color sub">{username}</span></h1>
+                    <h1 className="vis-title">Welcome, <span className="other-color sub">{username}</span>.</h1>
+                    <h3 className="sub-title">Insights extracted from last <span className="other-color">100</span> chess games on Lichess.org<span className="other-color">.</span> Only features standard <span className="other-color">bullet, blitz, rapid, and classical</span> games.</h3>
                     {/*Grid Row 1*/}
                     <Grid container spacing={1} alignItems="center" justifyContent="center">
                         {/*1-1*/}
@@ -213,7 +318,7 @@ export function VisualizeData() {
                                 }}
                             >
                                 <Grid container spacing={5} justifyContent="center">
-                                    <Grid item xs={12}><h2 className="paper-txt lft-txt">Rating Progression <span className="other-color sub">|</span> (Last 100 Games)<span className="other-color sub">.</span></h2></Grid>
+                                    <Grid item xs={12}><h2 className="paper-txt lft-txt">Rating Progression<span className="other-color sub">.</span></h2></Grid>
                                     <Grid item xs={12}>
                                         <div className="paper-txt fill-container">
                                             <Line data={elo_prog_chart_data} options={elo_prog_chart_options}/>
@@ -425,6 +530,58 @@ export function VisualizeData() {
                             </Paper>
                         </Grid>
                     </Grid>
+
+                    {/*Grid Row 2*/}
+                    <Grid container spacing={1} alignItems="center" justifyContent="center">
+                        {/*2-1*/}
+                        <Grid item xs={12}>
+                            <Paper 
+                                elevation={10}
+                                sx={{
+                                    bgcolor: 'background.paper',
+                                    height: 600,
+                                    padding: 2
+                                }}
+                            >
+                                <Grid container spacing={5} justifyContent="center">
+                                    <Grid item xs={12}>
+                                        <h2 className="paper-txt lft-txt">Opening Choice with White<span className="other-color sub">.</span></h2>
+                                    </Grid>
+                                    <Grid item xs={12} alignItems="center" justifyContent="center">
+                                        <div className="paper-txt fill-container chart-opening-white">
+                                            <Bar data={common_openings_white_chart_data} options={common_openings_chart_options}/>
+                                        </div>
+                                    </Grid>
+                                </Grid>
+                            </Paper>
+                        </Grid>
+                    </Grid>
+                    {/*Grid Row 3*/}
+                    <Grid container spacing={1} alignItems="center" justifyContent="center">
+                        {/*3-1*/}
+                        <Grid item xs={12}>
+                            <Paper 
+                                elevation={10}
+                                sx={{
+                                    bgcolor: 'background.paper',
+                                    height: 600,
+                                    padding: 2
+                                }}
+                            >
+                                <Grid container spacing={5} justifyContent="center">
+                                    <Grid item xs={12}>
+                                        <h2 className="paper-txt lft-txt">Opening Choice with Black<span className="other-color sub">.</span></h2>
+                                    </Grid>
+                                    <Grid item xs={12} alignItems="center" justifyContent="center">
+                                        <div className="paper-txt fill-container chart-opening-white">
+                                            <Bar data={common_openings_black_chart_data} options={common_openings_chart_options}/>
+                                        </div>
+                                    </Grid>
+                                </Grid>
+                            </Paper>
+                        </Grid>
+                    </Grid>
+                    
                     
                     <Box sx={{ height: 25}}>
 
@@ -440,7 +597,7 @@ export function VisualizeData() {
                         Back
                     </Button>
                     <Box sx={{ height: 100}}>
-                    
+                        {console.log(getOpeningsCounts(getOpeningsDataObj()[0])[1])}
                     </Box>
                 </Stack>
             </ThemeProvider>

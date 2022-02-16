@@ -79,3 +79,12 @@ a {
 .txt-centre { 
   text-align: center;
 }
+
+.chart-opening-white {
+  max-width: 85%;
+}
+
+.sub-title {
+  font-size: 1.2em;
+  padding-left: 1em;
+}
