@@ -52,40 +52,40 @@ export function UsernameForm() {
     }
     
     return (
-        <div>
-            <div className="center-screen">
-                <form onSubmit={handleSubmit}>
-                    <Stack spacing={3}>
-                        <div>
-                            <img src={require('../images/lichess_logo.png')} className="half-width-img"></img>
-                        </div>
-                        <h1 className="homepage-title">Lichess<span className="other-color">.</span>org Insights Generator<span className="other-color">.</span></h1>
-                        <h3>Enter your <span><a href="https://lichess.org/" target="_blank">Lichess.org</a></span> account username, and get access to interesting insights from your last <span className="other-color">100 games</span>.</h3>
-                        <h3>If you do not have a lichess account, enter '<span className="other-color">melogm</span>' or <span className="other-color">DrNykterstein (World Champion!)</span> for a demo.</h3>
-                        <TextField
-                            required
-                            id="enter-username-text" 
-                            label="Enter Lichess Username" 
-                            value={username}                   
-                            onInput={ e=>setUsername(e.target.value) }
-                            InputLabelProps={{
-                                color: 'primary'
-                            }}
-                            color="primary"
-                            focused
-                        />
-                        <Button 
-                            variant="contained"
-                            type="submit"
-                            color="success"
-                        >
-                            Generate Insights
-                        </Button>
-                        <LoadingIndicator />
-                    </Stack>
-                </form>
-            </div>
+        
+        <div className="center-screen">
+            <form onSubmit={handleSubmit}>
+                <Stack spacing={3}>
+                    <div>
+                        <img src={require('../images/lichess_logo.png')} className="half-width-img"></img>
+                    </div>
+                    <h1 className="homepage-title">Lichess<span className="other-color">.</span>org Insights Generator<span className="other-color">.</span></h1>
+                    <h3>Enter your <span><a href="https://lichess.org/" target="_blank">Lichess.org</a></span> account username, and get access to interesting insights from your last <span className="other-color">100 games</span>.</h3>
+                    <h3>If you do not have a lichess account, enter '<span className="other-color">melogm</span>' or <span className="other-color">DrNykterstein (World Champion!)</span> for a demo.</h3>
+                    <TextField
+                        required
+                        id="enter-username-text" 
+                        label="Enter Lichess Username" 
+                        value={username}                   
+                        onInput={ e=>setUsername(e.target.value) }
+                        InputLabelProps={{
+                            color: 'primary'
+                        }}
+                        color="primary"
+                        focused
+                    />
+                    <Button 
+                        variant="contained"
+                        type="submit"
+                        color="success"
+                    >
+                        Generate Insights
+                    </Button>
+                    <LoadingIndicator />
+                </Stack>
+            </form>
         </div>
+        
       );
 }
 

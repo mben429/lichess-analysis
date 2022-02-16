@@ -182,15 +182,28 @@ export function VisualizeData() {
 
     }
 
+    const averageArr = (arr) => {
+        let ret_sum = 0;
+        for (let i = 0; i <arr.length; i++){
+            ret_sum += arr[i];
+        }
+        return Math.floor(ret_sum / arr.length);
+    }
+
+    const getRatingAvg = (elo_arr) => {
+        let rating_avg_arr = [averageArr(elo_arr[0]), averageArr(elo_arr[1]), averageArr(elo_arr[2]), averageArr(elo_arr[3])];
+        return rating_avg_arr;
+    }
+
 
     return (
-        <div>
             <ThemeProvider theme={theme}>
                 <Stack spacing={3}>
                     <h1 className="vis-title">Welcome, <span className="other-color sub">{username}</span></h1>
-                    {/*Here is where charts go...*/}
-                    <Grid container spacing={3}>
-                        <Grid item xs={8}>
+                    {/*Grid Row 1*/}
+                    <Grid container spacing={1} alignItems="center" justifyContent="center">
+                        {/*1-1*/}
+                        <Grid item xs={7.5}>
                             <Paper 
                                 elevation={10}
                                 sx={{
@@ -209,7 +222,8 @@ export function VisualizeData() {
                                 </Grid>
                             </Paper>
                         </Grid>
-                        <Grid item xs={3}>
+                        {/*1-2*/}
+                        <Grid item xs={2}>
                             <Paper 
                                 elevation={10}
                                 sx={{
@@ -219,7 +233,7 @@ export function VisualizeData() {
                                 }}
                             >
                                 <Stack spacing={2}>
-                                    <h2 className="paper-txt lft-txt">Rating Insights<span className="other-color sub">.</span></h2>
+                                    <h2 className="paper-txt">Rating Diffs<span className="other-color sub">.</span></h2>
                                     <Paper
                                         elevation={5}
                                         sx={{
@@ -314,10 +328,110 @@ export function VisualizeData() {
                                 </Stack>
                             </Paper>
                         </Grid>
+                        {/*1-3*/}
+                        <Grid item xs={2}>
+                            <Paper 
+                                elevation={10}
+                                sx={{
+                                    bgcolor: 'background.paper',
+                                    height: 500,
+                                    padding: 2
+                                }}
+                            >
+                                <Stack spacing={2}>
+                                    <h2 className="paper-txt">Average Rating<span className="other-color sub">.</span></h2>
+                                    <Paper
+                                        elevation={5}
+                                        sx={{
+                                            bgcolor: 'background.inner',
+                                            height: 70,
+                                            padding: 1
+                                        }}
+                                    >
+                                        <Box className="paper-txt" sx={{ width: 1 }}>
+                                            <Box display="grid" gridTemplateRows="repeat(2, 1fr)" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+                                                <Box gridColumn="span 12" gridRow="span 1">
+                                                    <div className="sm-paper-txt-title">Average Bullet Rating.</div>
+                                                </Box>
+                                                <Box gridColumn="span 1" gridRow="span 2" className="paper-txt-num">
+                                                    {getRatingAvg(getEloRatingArray())[0]}
+                                                </Box>
+                                                
+                                                
+                                            </Box>
+                                        </Box>
+                                    </Paper>
+                                    <Paper
+                                        elevation={5}
+                                        sx={{
+                                            bgcolor: 'background.inner',
+                                            height: 70,
+                                            padding: 1
+                                        }}
+                                    >
+                                        <Box className="paper-txt" sx={{ width: 1 }}>
+                                            <Box display="grid" gridTemplateRows="repeat(3, 1fr)" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+                                                <Box gridColumn="span 12" gridRow="span 1">
+                                                    <div className="sm-paper-txt-title">Average Bullet Rating.</div>
+                                                </Box>
+                                                <Box gridColumn="span 1" gridRow="span 2" className="paper-txt-num">
+                                                    {getRatingAvg(getEloRatingArray())[1]}
+                                                </Box>
+                                            </Box>
+                                        </Box>
+
+                                    </Paper>
+                                    <Paper
+                                        elevation={5}
+                                        sx={{
+                                            bgcolor: 'background.inner',
+                                            height: 70,
+                                            padding: 1
+                                        }}
+                                    >
+                                        <Box className="paper-txt" sx={{ width: 1 }}>
+                                            <Box display="grid" gridTemplateRows="repeat(3, 1fr)" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+                                                <Box gridColumn="span 12" gridRow="span 1">
+                                                    <div className="sm-paper-txt-title">Average Bullet Rating.</div>
+                                                </Box>
+                                                <Box gridColumn="span 1" gridRow="span 2" className="paper-txt-num">
+                                                    {getRatingAvg(getEloRatingArray())[2]}
+                                                </Box>
+                                            </Box>
+                                        </Box>
+
+                                    </Paper>
+                                    <Paper
+                                        elevation={5}
+                                        sx={{
+                                            bgcolor: 'background.inner',
+                                            height: 70,
+                                            padding: 1
+                                        }}
+                                    >
+                                        <Box className="paper-txt" sx={{ width: 1 }}>
+                                            <Box display="grid" gridTemplateRows="repeat(3, 1fr)" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+                                                <Box gridColumn="span 12" gridRow="span 1">
+                                                    <div className="sm-paper-txt-title">Average Bullet Rating.</div>
+                                                </Box>
+                                                <Box gridColumn="span 1" gridRow="span 2" className="paper-txt-num">
+                                                    {getRatingAvg(getEloRatingArray())[1]}
+                                                </Box>
+                                            </Box>
+                                        </Box>
+
+                                    </Paper>
+                                </Stack>
+                            </Paper>
+                        </Grid>
                     </Grid>
+                    
+                    <Box sx={{ height: 25}}>
+
+                    </Box>
                     <Button 
                         className="general-btn" 
-                        variant="outlined" 
+                        variant="contained" 
                         color="primary"
                         onClick={() => {
                             handleOnClick();
@@ -325,9 +439,12 @@ export function VisualizeData() {
                     >
                         Back
                     </Button>
+                    <Box sx={{ height: 100}}>
+                    
+                    </Box>
                 </Stack>
             </ThemeProvider>
-        </div>
+
         
     )
 
