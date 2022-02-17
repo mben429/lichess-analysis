@@ -16,7 +16,6 @@ function App() {
       <Routes>
         <Route path="/" element={<UsernameForm />} />
         <Route path="/insights/:username" element={<VisualizeData />} />
-        
       </Routes>
     </Router>
   

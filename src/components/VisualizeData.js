@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Stack, Grid, Paper, Box } from '@mui/material';
 import Button from '@mui/material/Button';
 import '../App.css';
-import { useParams, useNavigate , useLocation} from "react-router-dom";
+import { useParams, useNavigate , useLocation } from "react-router-dom";
 import { ThemeProvider, sizing } from '@mui/system';
 import { createTheme } from '@mui/material/styles';
-import { Bar, Line, Doughnut} from 'react-chartjs-2';
+import { Bar, Line, getElementsAtEvent, getDatasetAtEvent } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded';
 import ArrowDownwardRoundedIcon from '@mui/icons-material/ArrowDownwardRounded';
 import BlockRoundedIcon from '@mui/icons-material/BlockRounded';
 import CodeRoundedIcon from '@mui/icons-material/CodeRounded';
-
-// THIS WORKS!
-// NEXT STEP: 
-// Function called from here needs to grab elo data from DataCentre.js
-
 
 
 export function VisualizeData() {
@@ -23,8 +18,9 @@ export function VisualizeData() {
     const navigate = useNavigate();
     const location = useLocation();
     const {username} = useParams();
-    const game_data = location.state
-    const num_games = game_data.length
+    const game_data = location.state;
+    const chartRefWhite = useRef();
+    const chartRefBlack = useRef();
 
     console.log("Username: ", username);
     console.log("Game Data: ", game_data);
@@ -216,7 +212,6 @@ export function VisualizeData() {
                 openings_arr_black.push(curr_game.opening.name);
             }            
         }
-        console.log("YO", [opening_arr_white, openings_arr_black])
 
         return [opening_arr_white, openings_arr_black];
     }
@@ -255,7 +250,9 @@ export function VisualizeData() {
         datasets: [
             {
                 barPercentage: 0.05,
-                barThickness: 10,
+                barThickness: 15,
+                borderColor: "rgb(0, 0, 0)",
+                borderWidth: 2,
                 backgroundColor: "rgba(240, 240, 240, 0.7)",
                 hoverBackgroundColor: "rgba(249, 0, 64, 1)",
                 data: getOpeningsCounts(getOpeningsDataObj()[0])[1]
@@ -269,6 +266,11 @@ export function VisualizeData() {
                 title: {
                     display: true,
                     text: 'Opening'
+                },
+                ticks: {
+                    font: {
+                        size: 11
+                    }
                 }
             },
             yAxes: {
@@ -283,6 +285,12 @@ export function VisualizeData() {
             legend: {
                 display: false
             }
+        },
+        onHover: function(e) {
+            e.native.target.style.cursor = 'pointer';
+        },
+        onLeave: function(e) {
+            e.native.target.style.cursor = 'default';
         }
     }
 
@@ -291,12 +299,65 @@ export function VisualizeData() {
         datasets: [
             {
                 barPercentage: 0.05,
-                barThickness: 10,
+                barThickness: 15,
+                borderColor: "rgb(255, 255, 255)",
+                borderWidth: 0.3,
                 backgroundColor: "rgba(0, 0, 0, 0.7)",
                 hoverBackgroundColor: "rgba(249, 0, 64, 1)",
                 data: getOpeningsCounts(getOpeningsDataObj()[1])[1]
             }
         ]
+    }
+
+    
+    const getEcosWhite = (index, openings_white) => {
+        let curr_game;
+        for (let i = 0; i < game_data.length; i++){
+            curr_game = game_data[i];
+            // When current game opening matches opening clicked on, return the eco associated with it.
+            if (curr_game.opening.name == openings_white[index]){
+                return curr_game.opening.eco;
+            }
+        }
+    }
+
+    const getEcosBlack = (index, openings_black) => {
+        let curr_game;
+        for (let i = 0; i < game_data.length; i++){
+            curr_game = game_data[i];
+            // When current game opening matches opening clicked on, return the eco associated with it.
+            if (curr_game.opening.name == openings_black[index]){
+                return curr_game.opening.eco;
+            }
+        }
+    }
+
+    const handleBarClickWhite = (event) => {
+        let active_element = getElementsAtEvent(chartRefWhite.current, event);
+        console.log("ACTIVE", active_element)
+        let bar_index = active_element[0].index;
+        let curr_opening_eco = getEcosWhite(bar_index, getOpeningsCounts(getOpeningsDataObj()[0])[0]);
+
+        
+        console.log("ECO", curr_opening_eco)
+
+        let url_str = `https://www.365chess.com/eco/${curr_opening_eco}`
+        window.open(url_str, '_blank');
+        
+    }
+
+    const handleBarClickBlack = (event) => {
+        let active_element = getElementsAtEvent(chartRefBlack.current, event);
+        console.log("ACTIVE", active_element)
+        let bar_index = active_element[0].index;
+        let curr_opening_eco = getEcosBlack(bar_index, getOpeningsCounts(getOpeningsDataObj()[1])[0]);
+
+        
+        console.log("ECO", curr_opening_eco)
+
+        let url_str = `https://www.365chess.com/eco/${curr_opening_eco}`
+        window.open(url_str, '_blank');
+        
     }
 
 
@@ -534,7 +595,7 @@ export function VisualizeData() {
                     {/*Grid Row 2*/}
                     <Grid container spacing={1} alignItems="center" justifyContent="center">
                         {/*2-1*/}
-                        <Grid item xs={12}>
+                        <Grid item xs={11}>
                             <Paper 
                                 elevation={10}
                                 sx={{
@@ -545,21 +606,22 @@ export function VisualizeData() {
                             >
                                 <Grid container spacing={5} justifyContent="center">
                                     <Grid item xs={12}>
-                                        <h2 className="paper-txt lft-txt">Opening Choice with White<span className="other-color sub">.</span></h2>
+                                        <h2 className="paper-txt txt-centre">Opening Choice with White<span className="other-color sub">.</span></h2>
                                     </Grid>
                                     <Grid item xs={12} alignItems="center" justifyContent="center">
                                         <div className="paper-txt fill-container chart-opening-white">
-                                            <Bar data={common_openings_white_chart_data} options={common_openings_chart_options}/>
+                                            <Bar className="opening-white-bar" ref={chartRefWhite} onClick={handleBarClickWhite} data={common_openings_white_chart_data} options={common_openings_chart_options}/>
                                         </div>
                                     </Grid>
                                 </Grid>
                             </Paper>
                         </Grid>
                     </Grid>
+
                     {/*Grid Row 3*/}
                     <Grid container spacing={1} alignItems="center" justifyContent="center">
                         {/*3-1*/}
-                        <Grid item xs={12}>
+                        <Grid item xs={11}>
                             <Paper 
                                 elevation={10}
                                 sx={{
@@ -570,11 +632,11 @@ export function VisualizeData() {
                             >
                                 <Grid container spacing={5} justifyContent="center">
                                     <Grid item xs={12}>
-                                        <h2 className="paper-txt lft-txt">Opening Choice with Black<span className="other-color sub">.</span></h2>
+                                        <h2 className="paper-txt txt-centre">Opening Choice with Black<span className="other-color sub">.</span></h2>
                                     </Grid>
                                     <Grid item xs={12} alignItems="center" justifyContent="center">
                                         <div className="paper-txt fill-container chart-opening-white">
-                                            <Bar data={common_openings_black_chart_data} options={common_openings_chart_options}/>
+                                            <Bar ref={chartRefBlack} onClick={handleBarClickBlack} data={common_openings_black_chart_data} options={common_openings_chart_options}/>
                                         </div>
                                     </Grid>
                                 </Grid>
