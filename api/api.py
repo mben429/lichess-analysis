@@ -1,15 +1,10 @@
 import requests
 from flask import Flask
-import numpy as np
-import pandas as pd
 import json
 from flask.globals import request
 from flask.helpers import send_from_directory
 from flask_cors import CORS, cross_origin
-from os.path import exists
 
-file_exists = exists('../build/index.html')
-print(file_exists)
 app = Flask(__name__, static_folder='../build', static_url_path='')
 CORS(app)
 
@@ -21,7 +16,7 @@ def get_chess_game_data():
     username = request.json
 
     URL = "http://lichess.org/api/games/user/{}".format(username)
-    PARAMS = {'moves': 'true', 'max': '100', 'opening': 'true', 'perfType': '[bullet, blitz, rapid, classical]', 'rated': 'true'}
+    PARAMS = {'moves': 'true', 'max': '100', 'opening': 'true', 'perfType': 'bullet,blitz,rapid,classical', 'rated': 'true'} 
     HEADERS = {"Accept": "application/x-ndjson"}
 
     r = requests.get(url=URL, params = PARAMS, headers=HEADERS)
