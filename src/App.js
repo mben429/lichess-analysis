@@ -1,9 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { UsernameForm } from './components/UsernameForm'
+import { UsernameForm } from './views/UsernameForm'
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { VisualizeData } from './components/VisualizeData';
+import { VisualizeData } from './views/VisualizeData';
 
 function App() {
     {/*

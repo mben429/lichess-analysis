@@ -81,10 +81,14 @@ a {
 }
 
 .chart-opening-white {
-  max-width: 85%;
+  max-width: 80%;
 }
 
 .sub-title {
   font-size: 1.2em;
   padding-left: 1em;
+}
+
+.bar-chart-title {
+  font-size: 2.5em;
 }

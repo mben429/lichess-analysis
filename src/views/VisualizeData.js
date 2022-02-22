@@ -1,33 +1,32 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Stack, Grid, Paper, Box } from '@mui/material';
-import Button from '@mui/material/Button';
 import '../App.css';
-import { useParams, useNavigate , useLocation } from "react-router-dom";
-import { ThemeProvider, sizing } from '@mui/system';
+import { useParams, useLocation } from "react-router-dom";
+import { ThemeProvider } from '@mui/system';
 import { createTheme } from '@mui/material/styles';
-import { Bar, Line, getElementsAtEvent, getDatasetAtEvent } from 'react-chartjs-2';
+import { Bar, Line, getElementsAtEvent } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded';
 import ArrowDownwardRoundedIcon from '@mui/icons-material/ArrowDownwardRounded';
 import BlockRoundedIcon from '@mui/icons-material/BlockRounded';
 import CodeRoundedIcon from '@mui/icons-material/CodeRounded';
+import { BackButton } from '../components/BackButton';
+import * as dataProcess from '../data/DataProcess';
 
 
 export function VisualizeData() {
 
-    const navigate = useNavigate();
-    const location = useLocation();
+    // Two important variables
     const {username} = useParams();
+    const location = useLocation();
     const game_data = location.state;
+
     const chartRefWhite = useRef();
     const chartRefBlack = useRef();
 
     console.log("Username: ", username);
     console.log("Game Data: ", game_data);
-    
-    const handleOnClick = () => {
-        navigate("/");
-    }
+
 
     const theme = createTheme({
         palette: {
@@ -38,45 +37,25 @@ export function VisualizeData() {
         }
     })
 
-    const checkUserColor = (curr_game) => {
-        if (curr_game.players.black.user.name == username) {
-            return "black";
+    const getArrowType = (diff_val) => {
+
+        if (diff_val > 0) {
+            return <ArrowUpwardRoundedIcon color="success" fontSize="large"/>
+        }
+        else if (diff_val < 0) {
+            return <ArrowDownwardRoundedIcon color="error" fontSize="large" />
+        }
+        else if (diff_val == 0) {
+            return <CodeRoundedIcon color="warning" fontSize="large" />
         }
         else {
-            return "white";
+            return <BlockRoundedIcon color="info" fontSize="large"/>
         }
-    }
-
-
-    // Get player ratings
-    const getUserRating = (curr_game, player) => {
-
-        if (checkUserColor(curr_game) == "black") {
-            if (player == "user"){
-                return curr_game.players.black.rating + curr_game.players.black.ratingDiff;
-            }
-            else if (player == "opp"){
-                return curr_game.players.white.rating + curr_game.players.white.ratingDiff;
-            }
-        }
-
-        else {
-            if (player == "user"){
-                return curr_game.players.white.rating + curr_game.players.white.ratingDiff;
-            }
-            else if (player == "opp"){
-                return curr_game.players.black.rating + curr_game.players.black.ratingDiff;
-            }
-        }
-    }
-
-    const getGameType = (curr_game) => {
-        return curr_game.speed;
     }
 
     // Retrieve elo array for bullet, blitz, classical and rapid
     const getEloRatingArray = () => {
-        
+            
         let elo_2d_arr = [];
         let elo_arr_bullet = [], elo_arr_blitz = [], elo_arr_rapid = [], elo_arr_classical = [];
         let curr_game;
@@ -85,36 +64,84 @@ export function VisualizeData() {
             
             curr_game = game_data[i];
 
-            if (getGameType(curr_game) == 'bullet') {
-                elo_arr_bullet.push(getUserRating(curr_game, "user"));
+            if (dataProcess.getGameType(curr_game) == 'bullet') {
+                elo_arr_bullet.push(dataProcess.getUserRating(curr_game, "user", username));
             }
-            else if (getGameType(curr_game) == 'blitz') {
-                elo_arr_blitz.push(getUserRating(curr_game, "user"));
+            else if (dataProcess.getGameType(curr_game) == 'blitz') {
+                elo_arr_blitz.push(dataProcess.getUserRating(curr_game, "user", username));
             }
-            else if (getGameType(curr_game) == 'rapid') {
-                elo_arr_rapid.push(getUserRating(curr_game, "user"));
+            else if (dataProcess.getGameType(curr_game) == 'rapid') {
+                elo_arr_rapid.push(dataProcess.getUserRating(curr_game, "user", username));
             }
-            else if (getGameType(curr_game) == 'classical') {
-                elo_arr_classical.push(getUserRating(curr_game, "user"));
+            else if (dataProcess.getGameType(curr_game) == 'classical') {
+                elo_arr_classical.push(dataProcess.getUserRating(curr_game, "user", username));
             }
         }
         elo_2d_arr.push(elo_arr_bullet.reverse(), elo_arr_blitz.reverse(), elo_arr_rapid.reverse(), elo_arr_classical.reverse());
 
-
         return elo_2d_arr;
-
+    }
+    
+    const getOpeningsDataObj = () => {
+        let opening_arr_white = [], openings_arr_black = [];
+        let curr_game;
+    
+        for (let i = 0; i < game_data.length; i++) {
+            curr_game = game_data[i];
+    
+            if (dataProcess.checkUserColor(curr_game, username) == "white") {
+                opening_arr_white.push(curr_game.opening.name);
+            }
+            else {
+                openings_arr_black.push(curr_game.opening.name);
+            }            
+        }
+        return [opening_arr_white, openings_arr_black];
     }
 
-    const getLabelEloProg = () => {
-        let label_arr = [];
-        for (let i = 1; i <= 100; i+=1){
-            label_arr.push(i);
+    
+    const getEcosWhite = (index, openings_white) => {
+        let curr_game;
+        for (let i = 0; i < game_data.length; i++){
+            curr_game = game_data[i];
+            // When current game opening matches opening clicked on, return the eco associated with it.
+            if (curr_game.opening.name == openings_white[index]){
+                return curr_game.opening.eco;
+            }
         }
-        return label_arr;
-    }   
+    }
+
+    const getEcosBlack = (index, openings_black) => {
+        let curr_game;
+        for (let i = 0; i < game_data.length; i++){
+            curr_game = game_data[i];
+            // When current game opening matches opening clicked on, return the eco associated with it.
+            if (curr_game.opening.name == openings_black[index]){
+                return curr_game.opening.eco;
+            }
+        }
+    }
+
+    const handleBarClickWhite = (event) => {
+        let active_element = getElementsAtEvent(chartRefWhite.current, event);
+        let bar_index = active_element[0].index;
+        let curr_opening_eco = getEcosWhite(bar_index, dataProcess.getOpeningsCounts(getOpeningsDataObj()[0])[0]);
+        let url_str = `https://www.365chess.com/eco/${curr_opening_eco}`
+
+        window.open(url_str, '_blank');
+    }
+
+    const handleBarClickBlack = (event) => {
+        let active_element = getElementsAtEvent(chartRefBlack.current, event);
+        let bar_index = active_element[0].index;
+        let curr_opening_eco = getEcosBlack(bar_index, dataProcess.getOpeningsCounts(getOpeningsDataObj()[1])[0]);
+        let url_str = `https://www.365chess.com/eco/${curr_opening_eco}`
+
+        window.open(url_str, '_blank');
+    }
 
     const elo_prog_chart_data = {
-        labels: getLabelEloProg(),
+        labels: dataProcess.getLabelEloProg(),
         datasets: [
             {
                 label: 'bullet (< 3 min)',
@@ -138,7 +165,7 @@ export function VisualizeData() {
             }
         ],
     };
-
+    
     const elo_prog_chart_options = {
         scales:{
             xAxes:{
@@ -155,98 +182,10 @@ export function VisualizeData() {
             }
         },
         responsive: true
+    }
     
-    }
-
-    const getEloDiffs = (elo_arr) => {
-        let bullet_diff = elo_arr[0][elo_arr[0].length-1] - elo_arr[0][0];
-        let blitz_diff =  elo_arr[1][elo_arr[1].length-1] - elo_arr[1][0];
-        let rapid_diff = elo_arr[2][elo_arr[2].length-1] - elo_arr[2][0];
-        let classical_diff = elo_arr[3][elo_arr[3].length-1] - elo_arr[3][0];
-
-        let diff_arr = [bullet_diff, blitz_diff, rapid_diff, classical_diff];
-
-        return diff_arr;
-    }
-
-    const getArrowType = (diff_val) => {
-
-        if (diff_val > 0) {
-            return <ArrowUpwardRoundedIcon color="success" fontSize="large"/>
-        }
-        else if (diff_val < 0) {
-            return <ArrowDownwardRoundedIcon color="error" fontSize="large" />
-        }
-        else if (diff_val == 0) {
-            return <CodeRoundedIcon color="warning" fontSize="large" />
-        }
-        else {
-            return <BlockRoundedIcon color="info" fontSize="large"/>
-        }
-    }
-
-    const averageArr = (arr) => {
-        let ret_sum = 0;
-        for (let i = 0; i <arr.length; i++){
-            ret_sum += arr[i];
-        }
-        return Math.floor(ret_sum / arr.length);
-    }
-
-    const getRatingAvg = (elo_arr) => {
-        let rating_avg_arr = [averageArr(elo_arr[0]), averageArr(elo_arr[1]), averageArr(elo_arr[2]), averageArr(elo_arr[3])];
-        return rating_avg_arr;
-    }
-
-    const getOpeningsDataObj = () => {
-        let opening_arr_white = [], openings_arr_black = [];
-        let curr_game;
-
-        for (let i = 0; i < game_data.length; i++) {
-            curr_game = game_data[i];
-
-            if (checkUserColor(curr_game) == "white") {
-                opening_arr_white.push(curr_game.opening.name);
-            }
-            else {
-                openings_arr_black.push(curr_game.opening.name);
-            }            
-        }
-
-        return [opening_arr_white, openings_arr_black];
-    }
-
-    const getDictVals = (count_dict, count_dict_op_top5) => {
-        let count_dict_freq_top5 = [];
-        for (let i = 0; i < count_dict_op_top5.length; i++) {
-            count_dict_freq_top5.push(count_dict[count_dict_op_top5[i]]);
-        }
-        return count_dict_freq_top5;
-    }
-
-    const getOpeningsCounts = (openings_arr) => {
-        let count_dict = {}
-
-        for (let opening of openings_arr) {
-            if (count_dict[opening]) {
-                count_dict[opening] += 1;
-            }
-            else {
-                count_dict[opening] = 1;
-            }
-        }
-
-        let count_dict_op_top5 = Object.keys(count_dict);
-        let count_dict_freq_top5 = getDictVals(count_dict, count_dict_op_top5);
-
-
-
-        return [count_dict_op_top5, count_dict_freq_top5];
-
-    }
-
     const common_openings_white_chart_data = {
-        labels: getOpeningsCounts(getOpeningsDataObj()[0])[0],
+        labels: dataProcess.getOpeningsCounts(getOpeningsDataObj()[0])[0],
         datasets: [
             {
                 barPercentage: 0.05,
@@ -255,11 +194,11 @@ export function VisualizeData() {
                 borderWidth: 2,
                 backgroundColor: "rgba(240, 240, 240, 0.7)",
                 hoverBackgroundColor: "rgba(249, 0, 64, 1)",
-                data: getOpeningsCounts(getOpeningsDataObj()[0])[1]
+                data: dataProcess.getOpeningsCounts(getOpeningsDataObj()[0])[1]
             }
         ]
     }
-
+    
     const common_openings_chart_options = {
         scales:{
             xAxes:{
@@ -293,9 +232,9 @@ export function VisualizeData() {
             e.native.target.style.cursor = 'default';
         }
     }
-
+    
     const common_openings_black_chart_data = {
-        labels: getOpeningsCounts(getOpeningsDataObj()[1])[0],
+        labels: dataProcess.getOpeningsCounts(getOpeningsDataObj()[1])[0],
         datasets: [
             {
                 barPercentage: 0.05,
@@ -304,60 +243,9 @@ export function VisualizeData() {
                 borderWidth: 0.3,
                 backgroundColor: "rgba(0, 0, 0, 0.7)",
                 hoverBackgroundColor: "rgba(249, 0, 64, 1)",
-                data: getOpeningsCounts(getOpeningsDataObj()[1])[1]
+                data: dataProcess.getOpeningsCounts(getOpeningsDataObj()[1])[1]
             }
         ]
-    }
-
-    
-    const getEcosWhite = (index, openings_white) => {
-        let curr_game;
-        for (let i = 0; i < game_data.length; i++){
-            curr_game = game_data[i];
-            // When current game opening matches opening clicked on, return the eco associated with it.
-            if (curr_game.opening.name == openings_white[index]){
-                return curr_game.opening.eco;
-            }
-        }
-    }
-
-    const getEcosBlack = (index, openings_black) => {
-        let curr_game;
-        for (let i = 0; i < game_data.length; i++){
-            curr_game = game_data[i];
-            // When current game opening matches opening clicked on, return the eco associated with it.
-            if (curr_game.opening.name == openings_black[index]){
-                return curr_game.opening.eco;
-            }
-        }
-    }
-
-    const handleBarClickWhite = (event) => {
-        let active_element = getElementsAtEvent(chartRefWhite.current, event);
-        console.log("ACTIVE", active_element)
-        let bar_index = active_element[0].index;
-        let curr_opening_eco = getEcosWhite(bar_index, getOpeningsCounts(getOpeningsDataObj()[0])[0]);
-
-        
-        console.log("ECO", curr_opening_eco)
-
-        let url_str = `https://www.365chess.com/eco/${curr_opening_eco}`
-        window.open(url_str, '_blank');
-        
-    }
-
-    const handleBarClickBlack = (event) => {
-        let active_element = getElementsAtEvent(chartRefBlack.current, event);
-        console.log("ACTIVE", active_element)
-        let bar_index = active_element[0].index;
-        let curr_opening_eco = getEcosBlack(bar_index, getOpeningsCounts(getOpeningsDataObj()[1])[0]);
-
-        
-        console.log("ECO", curr_opening_eco)
-
-        let url_str = `https://www.365chess.com/eco/${curr_opening_eco}`
-        window.open(url_str, '_blank');
-        
     }
 
 
@@ -414,10 +302,10 @@ export function VisualizeData() {
                                                     <div className="sm-paper-txt-title">Bullet Rating Diff</div>
                                                 </Box>
                                                 <Box gridColumn="span 1" gridRow="span 2">
-                                                    {getArrowType(getEloDiffs(getEloRatingArray())[0])}
+                                                    {getArrowType(dataProcess.getEloDiffs(getEloRatingArray())[0])}
                                                 </Box>
                                                 <Box gridColumn="span 2" gridRow="span 2">
-                                                    <div className="paper-txt-num">{getEloDiffs(getEloRatingArray())[0]}</div>
+                                                    <div className="paper-txt-num">{dataProcess.getEloDiffs(getEloRatingArray())[0]}</div>
                                                 </Box>
                                             </Box>
                                         </Box>
@@ -436,10 +324,10 @@ export function VisualizeData() {
                                                     <div className="sm-paper-txt-title">Blitz Rating Diff</div>
                                                 </Box>
                                                 <Box gridColumn="span 1" gridRow="span 2">
-                                                    {getArrowType(getEloDiffs(getEloRatingArray())[1])}
+                                                    {getArrowType(dataProcess.getEloDiffs(getEloRatingArray())[1])}
                                                 </Box>
                                                 <Box gridColumn="span 2" gridRow="span 2">
-                                                    <div className="paper-txt-num">{getEloDiffs(getEloRatingArray())[1]}</div>
+                                                    <div className="paper-txt-num">{dataProcess.getEloDiffs(getEloRatingArray())[1]}</div>
                                                 </Box>
                                             </Box>
                                         </Box>
@@ -459,10 +347,10 @@ export function VisualizeData() {
                                                     <div className="sm-paper-txt-title">Rapid Rating Diff</div>
                                                 </Box>
                                                 <Box gridColumn="span 1" gridRow="span 2">
-                                                    {getArrowType(getEloDiffs(getEloRatingArray())[2])}
+                                                    {getArrowType(dataProcess.getEloDiffs(getEloRatingArray())[2])}
                                                 </Box>
                                                 <Box gridColumn="span 2" gridRow="span 2">
-                                                    <div className="paper-txt-num">{getEloDiffs(getEloRatingArray())[2]}</div>
+                                                    <div className="paper-txt-num">{dataProcess.getEloDiffs(getEloRatingArray())[2]}</div>
                                                 </Box>
                                             </Box>
                                         </Box>
@@ -482,10 +370,10 @@ export function VisualizeData() {
                                                     <div className="sm-paper-txt-title">Classical Rating Diff</div>
                                                 </Box>
                                                 <Box gridColumn="span 1" gridRow="span 2">
-                                                    {getArrowType(getEloDiffs(getEloRatingArray())[3])}
+                                                    {getArrowType(dataProcess.getEloDiffs(getEloRatingArray())[3])}
                                                 </Box>
                                                 <Box gridColumn="span 2" gridRow="span 2">
-                                                    <div className="paper-txt-num">{getEloDiffs(getEloRatingArray())[3]}</div>
+                                                    <div className="paper-txt-num">{dataProcess.getEloDiffs(getEloRatingArray())[3]}</div>
                                                 </Box>
                                             </Box>
                                         </Box>
@@ -520,7 +408,7 @@ export function VisualizeData() {
                                                     <div className="sm-paper-txt-title">Average Bullet Rating</div>
                                                 </Box>
                                                 <Box gridColumn="span 1" gridRow="span 2" className="paper-txt-num">
-                                                    {getRatingAvg(getEloRatingArray())[0]}
+                                                    {dataProcess.getRatingAvg(getEloRatingArray())[0]}
                                                 </Box>
                                                 
                                                 
@@ -541,7 +429,7 @@ export function VisualizeData() {
                                                     <div className="sm-paper-txt-title">Average Blitz Rating</div>
                                                 </Box>
                                                 <Box gridColumn="span 1" gridRow="span 2" className="paper-txt-num">
-                                                    {getRatingAvg(getEloRatingArray())[1]}
+                                                    {dataProcess.getRatingAvg(getEloRatingArray())[1]}
                                                 </Box>
                                             </Box>
                                         </Box>
@@ -561,7 +449,7 @@ export function VisualizeData() {
                                                     <div className="sm-paper-txt-title">Average Rapid Rating</div>
                                                 </Box>
                                                 <Box gridColumn="span 1" gridRow="span 2" className="paper-txt-num">
-                                                    {getRatingAvg(getEloRatingArray())[2]}
+                                                    {dataProcess.getRatingAvg(getEloRatingArray())[2]}
                                                 </Box>
                                             </Box>
                                         </Box>
@@ -581,7 +469,7 @@ export function VisualizeData() {
                                                     <div className="sm-paper-txt-title">Average Classical Rating</div>
                                                 </Box>
                                                 <Box gridColumn="span 1" gridRow="span 2" className="paper-txt-num">
-                                                    {getRatingAvg(getEloRatingArray())[3]}
+                                                    {dataProcess.getRatingAvg(getEloRatingArray())[3]}
                                                 </Box>
                                             </Box>
                                         </Box>
@@ -606,11 +494,11 @@ export function VisualizeData() {
                             >
                                 <Grid container spacing={5} justifyContent="center">
                                     <Grid item xs={12}>
-                                        <h2 className="paper-txt txt-centre">Opening Choice with White<span className="other-color sub">.</span></h2>
+                                        <h2 className="paper-txt txt-centre bar-chart-title">Opening Choice with White<span className="other-color sub">.</span></h2>
                                     </Grid>
                                     <Grid item xs={12} alignItems="center" justifyContent="center">
                                         <div className="paper-txt fill-container chart-opening-white">
-                                            <Bar className="opening-white-bar" ref={chartRefWhite} onClick={handleBarClickWhite} data={common_openings_white_chart_data} options={common_openings_chart_options}/>
+                                            <Bar className="bar-chart" ref={chartRefWhite} onClick={handleBarClickWhite} data={common_openings_white_chart_data} options={common_openings_chart_options}/>
                                         </div>
                                     </Grid>
                                 </Grid>
@@ -632,11 +520,11 @@ export function VisualizeData() {
                             >
                                 <Grid container spacing={5} justifyContent="center">
                                     <Grid item xs={12}>
-                                        <h2 className="paper-txt txt-centre">Opening Choice with Black<span className="other-color sub">.</span></h2>
+                                        <h2 className="paper-txt txt-centre bar-chart-title">Opening Choice with Black<span className="other-color sub">.</span></h2>
                                     </Grid>
                                     <Grid item xs={12} alignItems="center" justifyContent="center">
                                         <div className="paper-txt fill-container chart-opening-white">
-                                            <Bar ref={chartRefBlack} onClick={handleBarClickBlack} data={common_openings_black_chart_data} options={common_openings_chart_options}/>
+                                            <Bar className="bar-chart" ref={chartRefBlack} onClick={handleBarClickBlack} data={common_openings_black_chart_data} options={common_openings_chart_options}/>
                                         </div>
                                     </Grid>
                                 </Grid>
@@ -645,26 +533,11 @@ export function VisualizeData() {
                     </Grid>
                     
                     
-                    <Box sx={{ height: 25}}>
-
-                    </Box>
-                    <Button 
-                        className="general-btn" 
-                        variant="contained" 
-                        color="primary"
-                        onClick={() => {
-                            handleOnClick();
-                        }}
-                    >
-                        Back
-                    </Button>
-                    <Box sx={{ height: 100}}>
-                        {console.log(getOpeningsCounts(getOpeningsDataObj()[0])[1])}
-                    </Box>
+                    <Box sx={{ height: 25}}></Box>
+                    <BackButton />
+                    <Box sx={{ height: 100}}></Box>
                 </Stack>
             </ThemeProvider>
-
-        
     )
 
 }
