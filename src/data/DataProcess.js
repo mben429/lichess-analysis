@@ -1,7 +1,3 @@
-
-
-
-
 export const checkUserColor = (curr_game, username) => {
     if (curr_game.players.black.user.name == username) {
         return "black";

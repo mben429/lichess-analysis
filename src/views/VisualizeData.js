@@ -1,17 +1,16 @@
-import React, { useRef } from 'react';
-import { Stack, Grid, Paper, Box } from '@mui/material';
+import React from 'react';
+import { Stack, Grid, Paper, Box, Typography } from '@mui/material';
 import '../App.css';
 import { useParams, useLocation } from "react-router-dom";
 import { ThemeProvider } from '@mui/system';
-import { createTheme } from '@mui/material/styles';
-import { Bar, Line, getElementsAtEvent } from 'react-chartjs-2';
-import Chart from 'chart.js/auto';
 import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded';
 import ArrowDownwardRoundedIcon from '@mui/icons-material/ArrowDownwardRounded';
 import BlockRoundedIcon from '@mui/icons-material/BlockRounded';
 import CodeRoundedIcon from '@mui/icons-material/CodeRounded';
 import { BackButton } from '../components/BackButton';
 import * as dataProcess from '../data/DataProcess';
+import { theme } from '../styles/Themes';
+import CurrentChart from '../data/CurrentChart';
 
 
 export function VisualizeData() {
@@ -21,21 +20,9 @@ export function VisualizeData() {
     const location = useLocation();
     const game_data = location.state;
 
-    const chartRefWhite = useRef();
-    const chartRefBlack = useRef();
-
     console.log("Username: ", username);
     console.log("Game Data: ", game_data);
 
-
-    const theme = createTheme({
-        palette: {
-            background: {
-                paper: 'rgb(11, 25, 50)',
-                inner: 'RGB(11, 25, 41)',
-            }
-        }
-    })
 
     const getArrowType = (diff_val) => {
 
@@ -82,177 +69,14 @@ export function VisualizeData() {
         return elo_2d_arr;
     }
     
-    const getOpeningsDataObj = () => {
-        let opening_arr_white = [], openings_arr_black = [];
-        let curr_game;
-    
-        for (let i = 0; i < game_data.length; i++) {
-            curr_game = game_data[i];
-    
-            if (dataProcess.checkUserColor(curr_game, username) == "white") {
-                opening_arr_white.push(curr_game.opening.name);
-            }
-            else {
-                openings_arr_black.push(curr_game.opening.name);
-            }            
-        }
-        return [opening_arr_white, openings_arr_black];
-    }
 
-    
-    const getEcosWhite = (index, openings_white) => {
-        let curr_game;
-        for (let i = 0; i < game_data.length; i++){
-            curr_game = game_data[i];
-            // When current game opening matches opening clicked on, return the eco associated with it.
-            if (curr_game.opening.name == openings_white[index]){
-                return curr_game.opening.eco;
-            }
-        }
-    }
-
-    const getEcosBlack = (index, openings_black) => {
-        let curr_game;
-        for (let i = 0; i < game_data.length; i++){
-            curr_game = game_data[i];
-            // When current game opening matches opening clicked on, return the eco associated with it.
-            if (curr_game.opening.name == openings_black[index]){
-                return curr_game.opening.eco;
-            }
-        }
-    }
-
-    const handleBarClickWhite = (event) => {
-        let active_element = getElementsAtEvent(chartRefWhite.current, event);
-        let bar_index = active_element[0].index;
-        let curr_opening_eco = getEcosWhite(bar_index, dataProcess.getOpeningsCounts(getOpeningsDataObj()[0])[0]);
-        let url_str = `https://www.365chess.com/eco/${curr_opening_eco}`
-
-        window.open(url_str, '_blank');
-    }
-
-    const handleBarClickBlack = (event) => {
-        let active_element = getElementsAtEvent(chartRefBlack.current, event);
-        let bar_index = active_element[0].index;
-        let curr_opening_eco = getEcosBlack(bar_index, dataProcess.getOpeningsCounts(getOpeningsDataObj()[1])[0]);
-        let url_str = `https://www.365chess.com/eco/${curr_opening_eco}`
-
-        window.open(url_str, '_blank');
-    }
-
-    const elo_prog_chart_data = {
-        labels: dataProcess.getLabelEloProg(),
-        datasets: [
-            {
-                label: 'bullet (< 3 min)',
-                data: getEloRatingArray()[0],
-                borderColor: "rgb(78, 193, 193)"
-            },
-            {
-                label: 'bltz (< 8 min)',
-                data: getEloRatingArray()[1],
-                borderColor: "rgb(255, 203, 40)"
-            },
-            {
-                label: 'rapid (< 25 min)',
-                data: getEloRatingArray()[2],
-                borderColor: "rgb(153, 152, 153)"
-            },
-            {
-                label: 'classical (< 360 min)',
-                data: getEloRatingArray()[3],
-                borderColor: 'rgb(249, 1, 64)'
-            }
-        ],
-    };
-    
-    const elo_prog_chart_options = {
-        scales:{
-            xAxes:{
-                title: {
-                    display: true,
-                    text: 'Game No.'
-                }
-            },
-            yAxes: {
-                title: {
-                    display: true,
-                    text: 'Elo Rating'
-                }
-            }
-        },
-        responsive: true
-    }
-    
-    const common_openings_white_chart_data = {
-        labels: dataProcess.getOpeningsCounts(getOpeningsDataObj()[0])[0],
-        datasets: [
-            {
-                barPercentage: 0.05,
-                barThickness: 15,
-                borderColor: "rgb(0, 0, 0)",
-                borderWidth: 2,
-                backgroundColor: "rgba(240, 240, 240, 0.7)",
-                hoverBackgroundColor: "rgba(249, 0, 64, 1)",
-                data: dataProcess.getOpeningsCounts(getOpeningsDataObj()[0])[1]
-            }
-        ]
-    }
-    
-    const common_openings_chart_options = {
-        scales:{
-            xAxes:{
-                title: {
-                    display: true,
-                    text: 'Opening'
-                },
-                ticks: {
-                    font: {
-                        size: 11
-                    }
-                }
-            },
-            yAxes: {
-                title: {
-                    display: true,
-                    text: 'Frequency'
-                }
-            }
-        },
-        responsive: true,
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        onHover: function(e) {
-            e.native.target.style.cursor = 'pointer';
-        },
-        onLeave: function(e) {
-            e.native.target.style.cursor = 'default';
-        }
-    }
-    
-    const common_openings_black_chart_data = {
-        labels: dataProcess.getOpeningsCounts(getOpeningsDataObj()[1])[0],
-        datasets: [
-            {
-                barPercentage: 0.05,
-                barThickness: 15,
-                borderColor: "rgb(255, 255, 255)",
-                borderWidth: 0.3,
-                backgroundColor: "rgba(0, 0, 0, 0.7)",
-                hoverBackgroundColor: "rgba(249, 0, 64, 1)",
-                data: dataProcess.getOpeningsCounts(getOpeningsDataObj()[1])[1]
-            }
-        ]
-    }
-
+    // How to get responsive options? 
+    // getResponsiveOptions() => This should return the options object {} 
 
     return (
             <ThemeProvider theme={theme}>
                 <Stack spacing={3}>
-                    <h1 className="vis-title">Welcome, <span className="other-color sub">{username}</span>.</h1>
+                    <Typography><h1 className="vis-title">Welcome, <span className="other-color sub">{username}</span>.</h1></Typography>
                     <h3 className="sub-title">Insights extracted from last <span className="other-color">100</span> chess games on Lichess.org<span className="other-color">.</span> Only features standard <span className="other-color">bullet, blitz, rapid, and classical</span> games.</h3>
                     {/*Grid Row 1*/}
                     <Grid container spacing={1} alignItems="center" justifyContent="center">
@@ -262,15 +86,22 @@ export function VisualizeData() {
                                 elevation={10}
                                 sx={{
                                     bgcolor: 'background.paper',
-                                    height: 500,
+                                    height: {
+                                        xxs: 300,
+                                        xs: 300,
+                                        sm: 400,
+                                        md: 500,
+                                        lg: 600,
+                                        xl: 700
+                                    },
                                     padding: 2
                                 }}
                             >
                                 <Grid container spacing={5} justifyContent="center">
-                                    <Grid item xs={12}><h2 className="paper-txt lft-txt">Rating Progression<span className="other-color sub">.</span></h2></Grid>
+                                    <Grid item xs={12}><h2 className="row-1-header-txt paper-txt paper-txt-pad-left">Rating Progression<span className="other-color sub">.</span></h2></Grid>
                                     <Grid item xs={12}>
-                                        <div className="paper-txt fill-container">
-                                            <Line data={elo_prog_chart_data} options={elo_prog_chart_options}/>
+                                        <div className="paper-txt line-chart-container">
+                                            <CurrentChart type="elo_prog_line_graph" username={username} game_data={game_data} elo_array={getEloRatingArray()} />
                                         </div>
                                     </Grid>
                                 </Grid>
@@ -497,8 +328,8 @@ export function VisualizeData() {
                                         <h2 className="paper-txt txt-centre bar-chart-title">Opening Choice with White<span className="other-color sub">.</span></h2>
                                     </Grid>
                                     <Grid item xs={12} alignItems="center" justifyContent="center">
-                                        <div className="paper-txt fill-container chart-opening-white">
-                                            <Bar className="bar-chart" ref={chartRefWhite} onClick={handleBarClickWhite} data={common_openings_white_chart_data} options={common_openings_chart_options}/>
+                                        <div className="paper-txt fill-container bar-chart-container">
+                                            <CurrentChart type="openings_white_bar" username={username} game_data={game_data} elo_array={getEloRatingArray()} />
                                         </div>
                                     </Grid>
                                 </Grid>
@@ -523,8 +354,8 @@ export function VisualizeData() {
                                         <h2 className="paper-txt txt-centre bar-chart-title">Opening Choice with Black<span className="other-color sub">.</span></h2>
                                     </Grid>
                                     <Grid item xs={12} alignItems="center" justifyContent="center">
-                                        <div className="paper-txt fill-container chart-opening-white">
-                                            <Bar className="bar-chart" ref={chartRefBlack} onClick={handleBarClickBlack} data={common_openings_black_chart_data} options={common_openings_chart_options}/>
+                                        <div className="paper-txt fill-container bar-chart-container">
+                                            <CurrentChart type="openings_black_bar" username={username} game_data={game_data} elo_array={getEloRatingArray()} />
                                         </div>
                                     </Grid>
                                 </Grid>
@@ -539,5 +370,4 @@ export function VisualizeData() {
                 </Stack>
             </ThemeProvider>
     )
-
 }
