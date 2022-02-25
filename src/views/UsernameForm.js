@@ -6,6 +6,7 @@ import { usePromiseTracker } from "react-promise-tracker";
 import { trackPromise } from 'react-promise-tracker';
 import '../App.css';
 import { useNavigate } from "react-router-dom";
+import Spinner from 'react-spinner-material';
 
 
 export function UsernameForm() {
@@ -19,7 +20,7 @@ export function UsernameForm() {
         const { promiseInProgress } = usePromiseTracker();
         
         return (
-            promiseInProgress && <h2>Generating.....</h2>
+            promiseInProgress && <div id="spinner"><Spinner id="spinner" size={10} spinnerColor={"#f90140"} spinnerWidth={2} visible={true} /></div>
             );  
         }
 

@@ -99,6 +99,11 @@ a {
   max-height: 100%;
 }
 
+#spinner {
+  padding-top: 1em;
+  margin: 0 auto;
+}
+
 
 @media screen and (max-width: 450px){
   .vis-title {
