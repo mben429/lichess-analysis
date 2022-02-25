@@ -32,15 +32,15 @@ export const getEloProgData = (elo_array, openings_obj) => {
 
 }
 
-export const getWhiteOpeningsBarData = (openings_data) => {
+export const getWhiteOpeningsBarData = (openings_data, bar_thickness, borderWidth) => {
     const chart_data = {
         labels: dataProcess.getOpeningsCounts(openings_data)[0],
         datasets: [
             {
                 barPercentage: 0.05,
-                barThickness: 15,
+                barThickness: bar_thickness,
                 borderColor: "rgb(0, 0, 0)",
-                borderWidth: 2,
+                borderWidth: borderWidth,
                 backgroundColor: "rgba(240, 240, 240, 0.7)",
                 hoverBackgroundColor: "rgba(249, 0, 64, 1)",
                 data: dataProcess.getOpeningsCounts(openings_data)[1]
@@ -51,15 +51,15 @@ export const getWhiteOpeningsBarData = (openings_data) => {
     return chart_data;
 } 
 
-export const getBlackOpeningsBarData = (openings_data) => {
+export const getBlackOpeningsBarData = (openings_data, bar_thickness, borderWidth) => {
     const chart_data = {
         labels: dataProcess.getOpeningsCounts(openings_data)[0],
         datasets: [
             {
                 barPercentage: 0.05,
-                barThickness: 15,
+                barThickness: bar_thickness,
                 borderColor: "rgb(255, 255, 255)",
-                borderWidth: 0.3,
+                borderWidth: borderWidth,
                 backgroundColor: "rgba(0, 0, 0, 0.7)",
                 hoverBackgroundColor: "rgba(249, 0, 64, 1)",
                 data: dataProcess.getOpeningsCounts(openings_data)[1]

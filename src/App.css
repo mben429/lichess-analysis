@@ -118,5 +118,38 @@ a {
     font-size: 1.2em;
   }
 
+  .line-chart-container {
+    width: 28em;
+  }
+
+  .bar-chart-title {
+    font-size: 1.5em;
+  }
+
+  .bar-chart-container {
+    width: 30em;
+  }
+
+  .homepage-title {
+    font-size: 2em;
+  }
+
+  .center-screen h3 {
+    font-size: 0.9em;
+    padding: 0.7em;
+  }
+
+  #enter-username-text {
+    padding: 1em;
+  }
+  
+  #button-generate {
+    margin: 2em;
+  }
+
+  #general-btn {
+    margin: 2em;
+  }
+
 }
 

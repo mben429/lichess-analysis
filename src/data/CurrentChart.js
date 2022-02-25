@@ -4,9 +4,22 @@ import { Line, Bar, getElementsAtEvent} from 'react-chartjs-2';
 import * as dataProcess from './DataProcess';
 import * as data from './Data';
 import Chart from 'chart.js/auto';
+import { theme } from '../styles/Themes';
 
 // This component returns the correct chart based on props.type
 export default function CurrentChart(props) {
+
+    const chartRefWhite = useRef();
+    const chartRefBlack = useRef();
+    let axesTitleFontSize;
+    let axesFontSize;
+    let legendFontSize;
+    let legendBoxSize;
+    let barThickness;
+    let lineWidth;
+    let pointBorderWidth;
+    let barxAxesDisplay;
+    let barBorderWidth;
 
     console.log("PROPS: ", props.type, props.username, props.game_data, props.elo_array);
     
@@ -31,8 +44,8 @@ export default function CurrentChart(props) {
 
     const getEcosWhite = (index, openings_white) => {
         let curr_game;
-        for (let i = 0; i < game_data.length; i++){
-            curr_game = game_data[i];
+        for (let i = 0; i < props.game_data.length; i++){
+            curr_game = props.game_data[i];
             // When current game opening matches opening clicked on, return the eco associated with it.
             if (curr_game.opening.name == openings_white[index]){
                 return curr_game.opening.eco;
@@ -42,8 +55,8 @@ export default function CurrentChart(props) {
 
     const getEcosBlack = (index, openings_black) => {
         let curr_game;
-        for (let i = 0; i < game_data.length; i++){
-            curr_game = game_data[i];
+        for (let i = 0; i < props.game_data.length; i++){
+            curr_game = props.game_data[i];
             // When current game opening matches opening clicked on, return the eco associated with it.
             if (curr_game.opening.name == openings_black[index]){
                 return curr_game.opening.eco;
@@ -69,7 +82,13 @@ export default function CurrentChart(props) {
         window.open(url_str, '_blank');
     }
 
+
+    // What needs to be responsive? 
+    // xAxis title, yAxes title, label font size, label box size, chart width/height
     const setProgChartOptions = () => {
+
+        console.log("ARGS: ", axesTitleFontSize, axesFontSize, legendFontSize, legendBoxSize, lineWidth)
+
         let elo_prog_chart_options = {
             scales:{
                 xAxes:{
@@ -77,14 +96,27 @@ export default function CurrentChart(props) {
                         display: true,
                         text: 'Game No.',
                         font: {
-                            size: 7
+                            size: axesTitleFontSize
+                        }
+                    },
+                    ticks: {
+                        font: {
+                            size: axesFontSize
                         }
                     }
                 },
                 yAxes: {
                     title: {
                         display: true,
-                        text: 'Elo Rating'
+                        text: 'Rating (Elo)',
+                        font: {
+                            size: axesTitleFontSize
+                        }
+                    },
+                    ticks: {
+                        font: {
+                            size: axesFontSize
+                        }
                     }
                 }
             },
@@ -93,33 +125,54 @@ export default function CurrentChart(props) {
                 legend: {
                     labels: {
                         font: {
-                            size: 7
-                        }
+                            size: legendFontSize
+                        },
+                        boxWidth: legendBoxSize
                     }
+                }
+            },
+            elements: {
+                line: {
+                    borderWidth: lineWidth
+                },
+                point: {
+                    borderWidth: pointBorderWidth
                 }
             }
         }
+
         return elo_prog_chart_options;
     }
     
+    // WHat needs to be responsive? 
+    // xAxis title, yAxes title, bar thickness, chart width/height
     const setOpeningsBarGraphOptions = () => {
         let openings_chart_options = {
             scales:{
                 xAxes:{
                     title: {
                         display: true,
-                        text: 'Opening'
+                        text: 'Opening',
+                        font: {
+                            size: axesTitleFontSize
+                        }
                     },
                     ticks: {
-                        font: {
-                            size: 7
-                        }
+                        display: barxAxesDisplay
                     }
                 },
                 yAxes: {
                     title: {
                         display: true,
-                        text: 'Frequency'
+                        text: 'Frequency',
+                        font: {
+                            size: axesTitleFontSize
+                        }
+                    },
+                    ticks: {
+                        font: {
+                            size: axesFontSize
+                        }
                     }
                 }
             },
@@ -140,15 +193,48 @@ export default function CurrentChart(props) {
         return openings_chart_options;
     }
 
+    const setChartOptionStates = () => {
+
+
+        if (useMediaQuery(theme.breakpoints.between('xxs', 'xs')) == true){
+            axesFontSize = 7;
+            axesTitleFontSize = 9;
+            legendFontSize = 9;
+            legendBoxSize = 15;
+            lineWidth = 1;
+            pointBorderWidth = 0.05;
+            barxAxesDisplay = false;
+            barThickness = 7;
+            barBorderWidth = 0.5;
+             
+        }
+
+    }
+
     const getChart = () => {
+
+        // Set the states for chart options
+        setChartOptionStates();
+
+        // Display correct graph
         if (props.type == "elo_prog_line_graph") {
-            return <Line data={data.getEloProgData(props.elo_array, null)} options={setProgChartOptions()} />
+            return <Line
+                data={data.getEloProgData(props.elo_array, null)} 
+                options={setProgChartOptions()} />
         }
         else if (props.type == "openings_white_bar") {
-            return <Bar data={data.getWhiteOpeningsBarData(getOpeningsDataObj()[0])} options={setOpeningsBarGraphOptions()} />
+            return <Bar 
+                data={data.getWhiteOpeningsBarData(getOpeningsDataObj()[0], barThickness, barBorderWidth)} 
+                options={setOpeningsBarGraphOptions()} 
+                ref={chartRefWhite} 
+                onClick={handleBarClickWhite} />
         }
         else if (props.type == "openings_black_bar") {
-            return <Bar data={data.getBlackOpeningsBarData(getOpeningsDataObj()[1])} options={setOpeningsBarGraphOptions()} />
+            return <Bar 
+                data={data.getBlackOpeningsBarData(getOpeningsDataObj()[1], barThickness, barBorderWidth)} 
+                options={setOpeningsBarGraphOptions()} 
+                ref={chartRefBlack} 
+                onClick={handleBarClickBlack} />
         }
     }
     return (

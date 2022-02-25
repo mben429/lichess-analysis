@@ -11,7 +11,7 @@ export function BackButton() {
 
     return (
         <Button 
-            className="general-btn" 
+            id="general-btn" 
             variant="contained" 
             color="primary"
             onClick={() => {

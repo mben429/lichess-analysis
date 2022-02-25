@@ -17,5 +17,12 @@ export const theme = createTheme({
             lg: 1450,
             xl: 1800
         }
+    },
+    components: {
+        MuiUseMediaQuery: {
+            defaultProps: {
+                noSsr: true
+            }
+        }
     }
 })

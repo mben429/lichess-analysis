@@ -319,13 +319,21 @@ export function VisualizeData() {
                                 elevation={10}
                                 sx={{
                                     bgcolor: 'background.paper',
-                                    height: 600,
+                                    height: {
+                                        xxs: 325,
+                                        xs: 500,
+                                        sm: 600,
+                                        md: 500,
+                                        lg: 600,
+                                        xl: 700
+                                    },
                                     padding: 2
                                 }}
                             >
                                 <Grid container spacing={5} justifyContent="center">
                                     <Grid item xs={12}>
                                         <h2 className="paper-txt txt-centre bar-chart-title">Opening Choice with White<span className="other-color sub">.</span></h2>
+                                        <h5 className="paper-txt txt-centre">Hover on a bar for the opening name, <span className="other-color">click</span> on a bar for <span className="other-color">more information</span> about selected opening.</h5>
                                     </Grid>
                                     <Grid item xs={12} alignItems="center" justifyContent="center">
                                         <div className="paper-txt fill-container bar-chart-container">
@@ -345,13 +353,21 @@ export function VisualizeData() {
                                 elevation={10}
                                 sx={{
                                     bgcolor: 'background.paper',
-                                    height: 600,
+                                    height: {
+                                        xxs: 325,
+                                        xs: 500,
+                                        sm: 600,
+                                        md: 500,
+                                        lg: 600,
+                                        xl: 700
+                                    },
                                     padding: 2
                                 }}
                             >
-                                <Grid container spacing={5} justifyContent="center">
+                                <Grid container spacing={4} justifyContent="center">
                                     <Grid item xs={12}>
                                         <h2 className="paper-txt txt-centre bar-chart-title">Opening Choice with Black<span className="other-color sub">.</span></h2>
+                                        <h5 className="paper-txt txt-centre">Hover on a bar for the opening name, <span className="other-color">click</span> on a bar for <span className="other-color">more information</span> about selected opening.</h5>
                                     </Grid>
                                     <Grid item xs={12} alignItems="center" justifyContent="center">
                                         <div className="paper-txt fill-container bar-chart-container">
