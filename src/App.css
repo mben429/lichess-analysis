@@ -79,7 +79,7 @@ a {
 }
 
 .bar-chart-container {
-  max-width: 80%;
+  max-width: 100%;
 }
 
 .sub-title {
@@ -105,7 +105,7 @@ a {
 }
 
 
-@media screen and (max-width: 450px){
+@media screen and (max-width: 480px){
   .vis-title {
     font-size: 2.5em;
     padding-left: 0.3em;
@@ -125,6 +125,7 @@ a {
 
   .line-chart-container {
     width: 28em;
+    max-width: 100%;
   }
 
   .bar-chart-title {
@@ -157,4 +158,425 @@ a {
   }
 
 }
+
+@media (min-width: 481px) and (max-width: 800px){
+  .vis-title {
+    font-size: 3.5em;
+    padding-left: 0.3em;
+  }
+
+  .sub-title {
+    font-size: 1.2em;
+  }
+
+  .paper-txt-pad-left {
+    padding-left: 0;
+  }
+
+  .row-1-header-txt {
+    font-size: 1.2em;
+  }
+
+  .line-chart-container {
+    width: 37em;
+    max-width: 100%;
+  }
+
+  .bar-chart-title {
+    font-size: 1.5em;
+  }
+
+  .bar-chart-container {
+    width: 48em;
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  .homepage-title {
+    font-size: 3.5em;
+  }
+
+  .center-screen h3 {
+    font-size: 1em;
+    padding: 1em;
+  }
+
+  #enter-username-text {
+    padding: 1em;
+  }
+  
+  #button-generate {
+    margin: 2em;
+  }
+
+  #general-btn {
+    margin: 2em;
+  }
+
+  .rating-diff-title {
+    font-size: 1em;
+  }
+
+  .sm-paper-txt-title {
+    font-size: 0.75em;
+  }
+
+  .paper-txt-num {
+    font-size: 1.2em;
+  }
+
+  .avg-rating-title {
+    font-size: 1em;
+  }
+
+  .sm-paper-txt-title {
+    font-size: 0.6em;
+  }
+
+  .half-width-img {
+    max-width: 10%;
+    background-color: white;
+    padding: 1.5em;
+    border-radius: 10em;
+  }
+}
+
+@media (min-width: 801px) and (max-width: 1100px){
+  .vis-title {
+    font-size: 4em;
+    padding-left: 0.3em;
+  }
+
+  .sub-title {
+    font-size: 1.5em;
+  }
+
+  .paper-txt-pad-left {
+    padding-left: 0;
+  }
+
+  .row-1-header-txt {
+    font-size: 1.2em;
+  }
+
+  .line-chart-container {
+    width: 52em;
+    max-width: 100%;
+  }
+
+  .bar-chart-title {
+    font-size: 1.5em;
+  }
+
+  .bar-chart-container {
+    width: 65em;
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  .homepage-title {
+    font-size: 4.5em;
+  }
+
+  .center-screen h3 {
+    font-size: 1.1em;
+    padding: 1em;
+  }
+
+  #enter-username-text {
+    padding: 1em;
+  }
+  
+  #button-generate {
+    margin: 2em;
+  }
+
+  #general-btn {
+    margin: 2em;
+  }
+
+  .rating-diff-title {
+    font-size: 1em;
+  }
+
+  .sm-paper-txt-title {
+    font-size: 0.75em;
+  }
+
+  .paper-txt-num {
+    font-size: 1.6em;
+  }
+
+  .avg-rating-title {
+    font-size: 1em;
+  }
+
+  .sm-paper-txt-title {
+    font-size: 0.6em;
+  }
+
+  .half-width-img {
+    max-width: 10%;
+    background-color: white;
+    padding: 1.5em;
+    border-radius: 10em;
+  }
+
+}
+
+@media (min-width: 1101px) and (max-width: 1500px){
+  .vis-title {
+    font-size: 5em;
+    padding-left: 0.3em;
+  }
+
+  .sub-title {
+    font-size: 1.7em;
+  }
+
+  .paper-txt-pad-left {
+    padding-left: 0;
+  }
+
+  .row-1-header-txt {
+    font-size: 1.5em;
+  }
+
+  .line-chart-container {
+    width: 70em;
+    max-width: 100%;
+  }
+
+  .bar-chart-title {
+    font-size: 2.5em;
+  }
+
+  .bar-chart-container {
+    width: 80em;
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  .homepage-title {
+    font-size: 5em;
+  }
+
+  .center-screen h3 {
+    font-size: 1.25em;
+    padding: 1em;
+  }
+
+  #enter-username-text {
+    padding: 1.4em;
+  }
+  
+  #button-generate {
+    margin: 2em;
+  }
+
+  #general-btn {
+    margin: 2em;
+  }
+
+  .rating-diff-title {
+    font-size: 1.5em;
+  }
+
+  .sm-paper-txt-title {
+    font-size: 1.1em;
+  }
+
+  .paper-txt-num {
+    font-size: 1.8em;
+  }
+
+  .avg-rating-title {
+    font-size: 1.5em;
+  }
+
+  .half-width-img {
+    max-width: 10%;
+    background-color: white;
+    padding: 1.5em;
+    border-radius: 10em;
+  }
+
+}
+
+@media (min-width: 1501px) and (max-width: 2000px){
+  .vis-title {
+    font-size: 5em;
+    padding-left: 0.3em;
+  }
+
+  .sub-title {
+    font-size: 1.8em;
+  }
+
+  .paper-txt-pad-left {
+    padding-left: 0;
+  }
+
+  .row-1-header-txt {
+    font-size: 1.8em;
+    padding-left: 0.5em;
+  }
+
+  .line-chart-container {
+    width: 100em;
+    max-width: 100%;
+  }
+
+  .bar-chart-title {
+    font-size: 4em;
+  }
+
+  .bar-chart-container {
+    width: 90em;
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  .homepage-title {
+    font-size: 5.5em;
+  }
+
+  .center-screen h3 {
+    font-size: 1.9em;
+    padding: 1em;
+  }
+
+  #enter-username-text {
+    padding: 1em;
+    font-size: 2em;
+  }
+  
+  #button-generate {
+    margin: 2em;
+    padding: 1em;
+    font-size: 1.5em;
+  }
+
+  #general-btn {
+    margin: 2em;
+    font-size: 1.2em;
+  }
+
+  .rating-diff-title {
+    font-size: 1.7em;
+  }
+
+  .sm-paper-txt-title {
+    font-size: 1.7em;
+  }
+
+  .paper-txt-num {
+    font-size: 3em;
+  }
+
+  .avg-rating-title {
+    font-size: 1.7em;
+  }
+
+  .half-width-img {
+    max-width: 10%;
+    background-color: white;
+    padding: 1.5em;
+    border-radius: 10em;
+  }
+
+  .bar-chart-subtitle {
+    font-size: 1.7em;
+  }
+
+}
+
+@media (min-width: 2001px){
+  .vis-title {
+    font-size: 7em;
+    padding-left: 0.3em;
+  }
+
+  .sub-title {
+    font-size: 2.5em;
+  }
+
+  .paper-txt-pad-left {
+    padding-left: 0;
+  }
+
+  .row-1-header-txt {
+    font-size: 2.5em;
+    padding-left: 0.5em;
+  }
+
+  .line-chart-container {
+    width: 120em;
+    max-width: 100%;
+  }
+
+  .bar-chart-title {
+    font-size: 4em;
+  }
+
+  .bar-chart-container {
+    width: 110em;
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  .homepage-title {
+    font-size: 7em;
+  }
+
+  .center-screen h3 {
+    font-size: 2.5em;
+    padding: 1em;
+  }
+
+  #enter-username-text {
+    padding: 1em;
+    font-size: 2em;
+  }
+  
+  #button-generate {
+    margin: 5em;
+    padding: 1.5em;
+    font-size: 1.7em;
+  }
+
+  #general-btn {
+    margin: 2em;
+    font-size: 2em;
+  }
+
+  .rating-diff-title {
+    font-size: 2.5em;
+  }
+
+  .sm-paper-txt-title {
+    font-size: 2.1em;
+  }
+
+  .paper-txt-num {
+    font-size: 3.5em;
+  }
+
+  .avg-rating-title {
+    font-size: 2.5em;
+  }
+
+  .half-width-img {
+    max-width: 10%;
+    background-color: white;
+    padding: 1.5em;
+    border-radius: 10em;
+  }
+
+  .bar-chart-subtitle {
+    font-size: 1.7em;
+  }
+
+}
+
 

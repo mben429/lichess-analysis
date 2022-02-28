@@ -205,8 +205,64 @@ export default function CurrentChart(props) {
             pointBorderWidth = 0.05;
             barxAxesDisplay = false;
             barThickness = 7;
-            barBorderWidth = 0.5;
-             
+            barBorderWidth = 0.5;    
+        }
+
+        else if  (useMediaQuery(theme.breakpoints.between('xs', 'sm')) == true) {
+            axesFontSize = 10;
+            axesTitleFontSize = 11;
+            legendFontSize = 12;
+            legendBoxSize = 30;
+            lineWidth = 2.5;
+            pointBorderWidth = 0.1;
+            barxAxesDisplay = false;
+            barThickness = 13;
+            barBorderWidth = 0.5; 
+        }
+
+        else if(useMediaQuery(theme.breakpoints.between('sm', 'md')) == true) {
+            axesFontSize = 11;
+            axesTitleFontSize = 13;
+            legendFontSize = 10;
+            legendBoxSize = 25;
+            lineWidth = 3;
+            pointBorderWidth = 0.5;
+            barxAxesDisplay = false;
+            barThickness = 20;
+            barBorderWidth = 1.25; 
+        }
+        else if (useMediaQuery(theme.breakpoints.between('md', 'lg')) == true) {
+            axesFontSize = 12;
+            axesTitleFontSize = 15;
+            legendFontSize = 12;
+            legendBoxSize = 30;
+            lineWidth = 2.5;
+            pointBorderWidth = 1.5;
+            barxAxesDisplay = false;
+            barThickness = 22;
+            barBorderWidth = 1.25; 
+        }
+        else if (useMediaQuery(theme.breakpoints.between('lg', 'xl')) == true) {
+            axesFontSize = 18;
+            axesTitleFontSize = 18;
+            legendFontSize = 17;
+            legendBoxSize = 50;
+            lineWidth = 3.5;
+            pointBorderWidth = 2;
+            barxAxesDisplay = false;
+            barThickness = 23;
+            barBorderWidth = 1.25; 
+        }
+        else if (useMediaQuery(theme.breakpoints.up('xl')) == true) {
+            axesFontSize = 24;
+            axesTitleFontSize = 20;
+            legendFontSize = 24;
+            legendBoxSize = 60;
+            lineWidth = 6.5;
+            pointBorderWidth = 7.5;
+            barxAxesDisplay = false;
+            barThickness = 32;
+            barBorderWidth = 1.25; 
         }
 
     }

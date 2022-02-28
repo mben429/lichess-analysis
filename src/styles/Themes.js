@@ -1,4 +1,3 @@
-
 import { createTheme } from '@mui/material/styles';
 
 export const theme = createTheme({
@@ -14,8 +13,8 @@ export const theme = createTheme({
             xs:450,
             sm:800,
             md: 1100,
-            lg: 1450,
-            xl: 1800
+            lg: 1500,
+            xl: 2000
         }
     },
     components: {

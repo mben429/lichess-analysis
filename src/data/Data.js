@@ -39,9 +39,9 @@ export const getWhiteOpeningsBarData = (openings_data, bar_thickness, borderWidt
             {
                 barPercentage: 0.05,
                 barThickness: bar_thickness,
-                borderColor: "rgb(0, 0, 0)",
+                borderColor: "rgba(0, 0, 0, 0.9)",
                 borderWidth: borderWidth,
-                backgroundColor: "rgba(240, 240, 240, 0.7)",
+                backgroundColor: "rgba(240, 240, 240, 0.8)",
                 hoverBackgroundColor: "rgba(249, 0, 64, 1)",
                 data: dataProcess.getOpeningsCounts(openings_data)[1]
             }
@@ -58,9 +58,9 @@ export const getBlackOpeningsBarData = (openings_data, bar_thickness, borderWidt
             {
                 barPercentage: 0.05,
                 barThickness: bar_thickness,
-                borderColor: "rgb(255, 255, 255)",
+                borderColor: "rgba(240, 240, 240, 0.5)",
                 borderWidth: borderWidth,
-                backgroundColor: "rgba(0, 0, 0, 0.7)",
+                backgroundColor: "rgba(0, 0, 0, 0.9)",
                 hoverBackgroundColor: "rgba(249, 0, 64, 1)",
                 data: dataProcess.getOpeningsCounts(openings_data)[1]
             }

@@ -80,7 +80,7 @@ export function VisualizeData() {
                     <h3 className="sub-title">Insights extracted from last <span className="other-color">100</span> chess games on Lichess.org<span className="other-color">.</span> Only features standard <span className="other-color">bullet, blitz, rapid, and classical</span> games.</h3>
                     {/*Grid Row 1*/}
                     <Grid container spacing={1} alignItems="center" justifyContent="center">
-                        {/*1-1*/}
+                        {/*ELO PROG PANEL*/}
                         <Grid item xs={7.5}>
                             <Paper 
                                 elevation={10}
@@ -88,11 +88,11 @@ export function VisualizeData() {
                                     bgcolor: 'background.paper',
                                     height: {
                                         xxs: 300,
-                                        xs: 300,
-                                        sm: 400,
-                                        md: 500,
-                                        lg: 600,
-                                        xl: 700
+                                        xs: 360,
+                                        sm: 450,
+                                        md: 600,
+                                        lg: 750,
+                                        xl: 950
                                     },
                                     padding: 2
                                 }}
@@ -107,23 +107,37 @@ export function VisualizeData() {
                                 </Grid>
                             </Paper>
                         </Grid>
-                        {/*1-2*/}
+                        {/*RATING DIFF PANEL*/}
                         <Grid item xs={2}>
                             <Paper 
                                 elevation={10}
                                 sx={{
                                     bgcolor: 'background.paper',
-                                    height: 500,
+                                    height: {
+                                        xxs: 500,
+                                        xs: 400,
+                                        sm: 450,
+                                        md: 600,
+                                        lg: 750,
+                                        xl: 950
+                                    },
                                     padding: 2
                                 }}
                             >
                                 <Stack spacing={2}>
-                                    <h2 className="paper-txt">Rating Diffs<span className="other-color sub">.</span></h2>
+                                    <h2 className="paper-txt rating-diff-title">Rating Diffs<span className="other-color">.</span></h2>
                                     <Paper
                                         elevation={5}
                                         sx={{
                                             bgcolor: 'background.inner',
-                                            height: 70,
+                                            height: {
+                                                xxs: 70,
+                                                xs: 60,
+                                                sm: 65,
+                                                md: 90,
+                                                lg: 130,
+                                                xl: 160
+                                            },
                                             padding: 1
                                         }}
                                     >
@@ -145,7 +159,14 @@ export function VisualizeData() {
                                         elevation={5}
                                         sx={{
                                             bgcolor: 'background.inner',
-                                            height: 70,
+                                            height: {
+                                                xxs: 70,
+                                                xs: 60,
+                                                sm: 65,
+                                                md: 90,
+                                                lg: 130,
+                                                xl: 160
+                                            },
                                             padding: 1
                                         }}
                                     >
@@ -168,7 +189,14 @@ export function VisualizeData() {
                                         elevation={5}
                                         sx={{
                                             bgcolor: 'background.inner',
-                                            height: 70,
+                                            height: {
+                                                xxs: 70,
+                                                xs: 60,
+                                                sm: 65,
+                                                md: 90,
+                                                lg: 130,
+                                                xl: 160
+                                            },
                                             padding: 1
                                         }}
                                     >
@@ -191,7 +219,14 @@ export function VisualizeData() {
                                         elevation={5}
                                         sx={{
                                             bgcolor: 'background.inner',
-                                            height: 70,
+                                            height: {
+                                                xxs: 70,
+                                                xs: 60,
+                                                sm: 65,
+                                                md: 90,
+                                                lg: 130,
+                                                xl: 160
+                                            },
                                             padding: 1
                                         }}
                                     >
@@ -213,23 +248,37 @@ export function VisualizeData() {
                                 </Stack>
                             </Paper>
                         </Grid>
-                        {/*1-3*/}
+                        {/*AVERAGE RATING PANEL*/}
                         <Grid item xs={2}>
                             <Paper 
                                 elevation={10}
                                 sx={{
                                     bgcolor: 'background.paper',
-                                    height: 500,
+                                    height: {
+                                        xxs: 500,
+                                        xs: 400,
+                                        sm: 450,
+                                        md: 600,
+                                        lg: 750,
+                                        xl: 950
+                                    },
                                     padding: 2
                                 }}
                             >
                                 <Stack spacing={2}>
-                                    <h2 className="paper-txt">Average Rating<span className="other-color sub">.</span></h2>
+                                    <h2 className="paper-txt avg-rating-title">Average Rating<span className="other-color sub">.</span></h2>
                                     <Paper
                                         elevation={5}
                                         sx={{
                                             bgcolor: 'background.inner',
-                                            height: 70,
+                                            height: {
+                                                xxs: 70,
+                                                xs: 60,
+                                                sm: 65,
+                                                md: 90,
+                                                lg: 130,
+                                                xl: 160
+                                            },
                                             padding: 1
                                         }}
                                     >
@@ -250,7 +299,14 @@ export function VisualizeData() {
                                         elevation={5}
                                         sx={{
                                             bgcolor: 'background.inner',
-                                            height: 70,
+                                            height: {
+                                                xxs: 70,
+                                                xs: 60,
+                                                sm: 65,
+                                                md: 90,
+                                                lg: 130,
+                                                xl: 160
+                                            },
                                             padding: 1
                                         }}
                                     >
@@ -270,7 +326,14 @@ export function VisualizeData() {
                                         elevation={5}
                                         sx={{
                                             bgcolor: 'background.inner',
-                                            height: 70,
+                                            height: {
+                                                xxs: 70,
+                                                xs: 60,
+                                                sm: 65,
+                                                md: 90,
+                                                lg: 130,
+                                                xl: 160
+                                            },
                                             padding: 1
                                         }}
                                     >
@@ -290,7 +353,14 @@ export function VisualizeData() {
                                         elevation={5}
                                         sx={{
                                             bgcolor: 'background.inner',
-                                            height: 70,
+                                            height: { 
+                                                xxs: 70,
+                                                xs: 60,
+                                                sm: 65,
+                                                md: 90,
+                                                lg: 130,
+                                                xl: 160
+                                            },
                                             padding: 1
                                         }}
                                     >
@@ -311,9 +381,9 @@ export function VisualizeData() {
                         </Grid>
                     </Grid>
 
-                    {/*Grid Row 2*/}
+                    {/*WHITE OPENING BAR*/}
                     <Grid container spacing={1} alignItems="center" justifyContent="center">
-                        {/*2-1*/}
+                        {/*WHITE OPENING PANEL*/}
                         <Grid item xs={11}>
                             <Paper 
                                 elevation={10}
@@ -323,9 +393,9 @@ export function VisualizeData() {
                                         xxs: 325,
                                         xs: 500,
                                         sm: 600,
-                                        md: 500,
-                                        lg: 600,
-                                        xl: 700
+                                        md: 650,
+                                        lg: 900,
+                                        xl: 1000
                                     },
                                     padding: 2
                                 }}
@@ -333,7 +403,7 @@ export function VisualizeData() {
                                 <Grid container spacing={5} justifyContent="center">
                                     <Grid item xs={12}>
                                         <h2 className="paper-txt txt-centre bar-chart-title">Opening Choice with White<span className="other-color sub">.</span></h2>
-                                        <h5 className="paper-txt txt-centre">Hover on a bar for the opening name, <span className="other-color">click</span> on a bar for <span className="other-color">more information</span> about selected opening.</h5>
+                                        <h5 className="paper-txt txt-centre bar-chart-subtitle">Hover on a bar for the opening name, <span className="other-color">click</span> on a bar for <span className="other-color">more information</span> about selected opening.</h5>
                                     </Grid>
                                     <Grid item xs={12} alignItems="center" justifyContent="center">
                                         <div className="paper-txt fill-container bar-chart-container">
@@ -345,9 +415,9 @@ export function VisualizeData() {
                         </Grid>
                     </Grid>
 
-                    {/*Grid Row 3*/}
+                    {/*BLACK OPENING BAR*/}
                     <Grid container spacing={1} alignItems="center" justifyContent="center">
-                        {/*3-1*/}
+                        {/*BLACK OPENING PANEL*/}
                         <Grid item xs={11}>
                             <Paper 
                                 elevation={10}
@@ -357,9 +427,9 @@ export function VisualizeData() {
                                         xxs: 325,
                                         xs: 500,
                                         sm: 600,
-                                        md: 500,
-                                        lg: 600,
-                                        xl: 700
+                                        md: 650,
+                                        lg: 900,
+                                        xl: 1000
                                     },
                                     padding: 2
                                 }}
@@ -367,7 +437,7 @@ export function VisualizeData() {
                                 <Grid container spacing={4} justifyContent="center">
                                     <Grid item xs={12}>
                                         <h2 className="paper-txt txt-centre bar-chart-title">Opening Choice with Black<span className="other-color sub">.</span></h2>
-                                        <h5 className="paper-txt txt-centre">Hover on a bar for the opening name, <span className="other-color">click</span> on a bar for <span className="other-color">more information</span> about selected opening.</h5>
+                                        <h5 className="paper-txt txt-centre bar-chart-subtitle">Hover on a bar for the opening name, <span className="other-color">click</span> on a bar for <span className="other-color">more information</span> about selected opening.</h5>
                                     </Grid>
                                     <Grid item xs={12} alignItems="center" justifyContent="center">
                                         <div className="paper-txt fill-container bar-chart-container">

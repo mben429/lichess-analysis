@@ -20,7 +20,7 @@ export function UsernameForm() {
         const { promiseInProgress } = usePromiseTracker();
         
         return (
-            promiseInProgress && <div id="spinner"><Spinner id="spinner" size={10} spinnerColor={"#f90140"} spinnerWidth={2} visible={true} /></div>
+            promiseInProgress && <div id="spinner"><Spinner id="spinner" size={10} color={"#f90140"} spinnerWidth={2} visible={true} /></div>
             );  
         }
 
