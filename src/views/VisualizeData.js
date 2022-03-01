@@ -70,15 +70,18 @@ export function VisualizeData() {
     }
     
 
-    // How to get responsive options? 
-    // getResponsiveOptions() => This should return the options object {} 
+    // How to refactor JSX below....
+    // COMPONENTS with PROPS
+        // Paper => props: elevation, sx, padding
+        // Arrow => props: rating_category
 
     return (
             <ThemeProvider theme={theme}>
                 <Stack spacing={3}>
                     <Typography><h1 className="vis-title">Welcome, <span className="other-color sub">{username}</span>.</h1></Typography>
                     <h3 className="sub-title">Insights extracted from last <span className="other-color">100</span> chess games on Lichess.org<span className="other-color">.</span> Only features standard <span className="other-color">bullet, blitz, rapid, and classical</span> games.</h3>
-                    {/*Grid Row 1*/}
+                    
+                    {/*RATING INSIGHTS*/}
                     <Grid container spacing={1} alignItems="center" justifyContent="center">
                         {/*ELO PROG PANEL*/}
                         <Grid item xs={7.5}>
