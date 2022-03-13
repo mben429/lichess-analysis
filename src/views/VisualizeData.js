@@ -10,12 +10,12 @@ import CodeRoundedIcon from '@mui/icons-material/CodeRounded';
 import { BackButton } from '../components/BackButton';
 import * as dataProcess from '../data/DataProcess';
 import { theme } from '../styles/Themes';
+import { paperSx, paperSxLargeCol, paperSxBarCharts } from '../styles/Styles';
 import CurrentChart from '../data/CurrentChart';
 
 
 export function VisualizeData() {
 
-    // Two important variables
     const {username} = useParams();
     const location = useLocation();
     const game_data = location.state;
@@ -66,6 +66,8 @@ export function VisualizeData() {
         }
         elo_2d_arr.push(elo_arr_bullet.reverse(), elo_arr_blitz.reverse(), elo_arr_rapid.reverse(), elo_arr_classical.reverse());
 
+        console.log({paperSx})
+
         return elo_2d_arr;
     }
     
@@ -87,18 +89,7 @@ export function VisualizeData() {
                         <Grid item xs={7.5}>
                             <Paper 
                                 elevation={10}
-                                sx={{
-                                    bgcolor: 'background.paper',
-                                    height: {
-                                        xxs: 300,
-                                        xs: 360,
-                                        sm: 450,
-                                        md: 600,
-                                        lg: 750,
-                                        xl: 950
-                                    },
-                                    padding: 2
-                                }}
+                                sx={paperSxLargeCol}
                             >
                                 <Grid container spacing={5} justifyContent="center">
                                     <Grid item xs={12}><h2 className="row-1-header-txt paper-txt paper-txt-pad-left">Rating Progression<span className="other-color sub">.</span></h2></Grid>
@@ -114,35 +105,13 @@ export function VisualizeData() {
                         <Grid item xs={2}>
                             <Paper 
                                 elevation={10}
-                                sx={{
-                                    bgcolor: 'background.paper',
-                                    height: {
-                                        xxs: 500,
-                                        xs: 400,
-                                        sm: 450,
-                                        md: 600,
-                                        lg: 750,
-                                        xl: 950
-                                    },
-                                    padding: 2
-                                }}
+                                sx={paperSxLargeCol}
                             >
                                 <Stack spacing={2}>
                                     <h2 className="paper-txt rating-diff-title">Rating Diffs<span className="other-color">.</span></h2>
                                     <Paper
                                         elevation={5}
-                                        sx={{
-                                            bgcolor: 'background.inner',
-                                            height: {
-                                                xxs: 70,
-                                                xs: 60,
-                                                sm: 65,
-                                                md: 90,
-                                                lg: 130,
-                                                xl: 160
-                                            },
-                                            padding: 1
-                                        }}
+                                        sx={paperSx}
                                     >
                                         <Box className="paper-txt" sx={{ width: 1 }}>
                                             <Box display="grid" gridTemplateRows="repeat(3, 1fr)" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
@@ -160,18 +129,7 @@ export function VisualizeData() {
                                     </Paper>
                                     <Paper
                                         elevation={5}
-                                        sx={{
-                                            bgcolor: 'background.inner',
-                                            height: {
-                                                xxs: 70,
-                                                xs: 60,
-                                                sm: 65,
-                                                md: 90,
-                                                lg: 130,
-                                                xl: 160
-                                            },
-                                            padding: 1
-                                        }}
+                                        sx={paperSx}
                                     >
                                         <Box className="paper-txt" sx={{ width: 1 }}>
                                             <Box display="grid" gridTemplateRows="repeat(3, 1fr)" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
@@ -190,18 +148,7 @@ export function VisualizeData() {
                                     </Paper>
                                     <Paper
                                         elevation={5}
-                                        sx={{
-                                            bgcolor: 'background.inner',
-                                            height: {
-                                                xxs: 70,
-                                                xs: 60,
-                                                sm: 65,
-                                                md: 90,
-                                                lg: 130,
-                                                xl: 160
-                                            },
-                                            padding: 1
-                                        }}
+                                        sx={paperSx}
                                     >
                                         <Box className="paper-txt" sx={{ width: 1 }}>
                                             <Box display="grid" gridTemplateRows="repeat(3, 1fr)" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
@@ -220,18 +167,7 @@ export function VisualizeData() {
                                     </Paper>
                                     <Paper
                                         elevation={5}
-                                        sx={{
-                                            bgcolor: 'background.inner',
-                                            height: {
-                                                xxs: 70,
-                                                xs: 60,
-                                                sm: 65,
-                                                md: 90,
-                                                lg: 130,
-                                                xl: 160
-                                            },
-                                            padding: 1
-                                        }}
+                                        sx={paperSx}
                                     >
                                         <Box className="paper-txt" sx={{ width: 1 }}>
                                             <Box display="grid" gridTemplateRows="repeat(3, 1fr)" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
@@ -255,35 +191,13 @@ export function VisualizeData() {
                         <Grid item xs={2}>
                             <Paper 
                                 elevation={10}
-                                sx={{
-                                    bgcolor: 'background.paper',
-                                    height: {
-                                        xxs: 500,
-                                        xs: 400,
-                                        sm: 450,
-                                        md: 600,
-                                        lg: 750,
-                                        xl: 950
-                                    },
-                                    padding: 2
-                                }}
+                                sx={paperSxLargeCol}
                             >
                                 <Stack spacing={2}>
                                     <h2 className="paper-txt avg-rating-title">Average Rating<span className="other-color sub">.</span></h2>
                                     <Paper
                                         elevation={5}
-                                        sx={{
-                                            bgcolor: 'background.inner',
-                                            height: {
-                                                xxs: 70,
-                                                xs: 60,
-                                                sm: 65,
-                                                md: 90,
-                                                lg: 130,
-                                                xl: 160
-                                            },
-                                            padding: 1
-                                        }}
+                                        sx={paperSx}
                                     >
                                         <Box className="paper-txt" sx={{ width: 1 }}>
                                             <Box display="grid" gridTemplateRows="repeat(2, 1fr)" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
@@ -300,18 +214,7 @@ export function VisualizeData() {
                                     </Paper>
                                     <Paper
                                         elevation={5}
-                                        sx={{
-                                            bgcolor: 'background.inner',
-                                            height: {
-                                                xxs: 70,
-                                                xs: 60,
-                                                sm: 65,
-                                                md: 90,
-                                                lg: 130,
-                                                xl: 160
-                                            },
-                                            padding: 1
-                                        }}
+                                        sx={paperSx}
                                     >
                                         <Box className="paper-txt" sx={{ width: 1 }}>
                                             <Box display="grid" gridTemplateRows="repeat(3, 1fr)" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
@@ -327,18 +230,7 @@ export function VisualizeData() {
                                     </Paper>
                                     <Paper
                                         elevation={5}
-                                        sx={{
-                                            bgcolor: 'background.inner',
-                                            height: {
-                                                xxs: 70,
-                                                xs: 60,
-                                                sm: 65,
-                                                md: 90,
-                                                lg: 130,
-                                                xl: 160
-                                            },
-                                            padding: 1
-                                        }}
+                                        sx={paperSx}
                                     >
                                         <Box className="paper-txt" sx={{ width: 1 }}>
                                             <Box display="grid" gridTemplateRows="repeat(3, 1fr)" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
@@ -354,18 +246,7 @@ export function VisualizeData() {
                                     </Paper>
                                     <Paper
                                         elevation={5}
-                                        sx={{
-                                            bgcolor: 'background.inner',
-                                            height: { 
-                                                xxs: 70,
-                                                xs: 60,
-                                                sm: 65,
-                                                md: 90,
-                                                lg: 130,
-                                                xl: 160
-                                            },
-                                            padding: 1
-                                        }}
+                                        sx={paperSx}
                                     >
                                         <Box className="paper-txt" sx={{ width: 1 }}>
                                             <Box display="grid" gridTemplateRows="repeat(3, 1fr)" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
@@ -390,18 +271,7 @@ export function VisualizeData() {
                         <Grid item xs={11}>
                             <Paper 
                                 elevation={10}
-                                sx={{
-                                    bgcolor: 'background.paper',
-                                    height: {
-                                        xxs: 325,
-                                        xs: 500,
-                                        sm: 600,
-                                        md: 650,
-                                        lg: 900,
-                                        xl: 1000
-                                    },
-                                    padding: 2
-                                }}
+                                sx={paperSxBarCharts}
                             >
                                 <Grid container spacing={5} justifyContent="center">
                                     <Grid item xs={12}>
@@ -424,18 +294,7 @@ export function VisualizeData() {
                         <Grid item xs={11}>
                             <Paper 
                                 elevation={10}
-                                sx={{
-                                    bgcolor: 'background.paper',
-                                    height: {
-                                        xxs: 325,
-                                        xs: 500,
-                                        sm: 600,
-                                        md: 650,
-                                        lg: 900,
-                                        xl: 1000
-                                    },
-                                    padding: 2
-                                }}
+                                sx={paperSxBarCharts}
                             >
                                 <Grid container spacing={4} justifyContent="center">
                                     <Grid item xs={12}>

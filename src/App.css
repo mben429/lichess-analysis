@@ -405,12 +405,12 @@ a {
 
 @media (min-width: 1501px) and (max-width: 2000px){
   .vis-title {
-    font-size: 5em;
-    padding-left: 0.3em;
+    font-size: 4em;
+    padding-left: 0.5em;
   }
 
   .sub-title {
-    font-size: 1.8em;
+    font-size: 1.5em;
   }
 
   .paper-txt-pad-left {
@@ -438,23 +438,23 @@ a {
   }
 
   .homepage-title {
-    font-size: 5.5em;
+    font-size: 4.5em;
   }
 
   .center-screen h3 {
-    font-size: 1.9em;
+    font-size: 1.5em;
     padding: 1em;
   }
 
   #enter-username-text {
     padding: 1em;
-    font-size: 2em;
+    font-size: 1.5em;
   }
   
   #button-generate {
     margin: 2em;
     padding: 1em;
-    font-size: 1.5em;
+    font-size: 1em;
   }
 
   #general-btn {
