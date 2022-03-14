@@ -59,7 +59,8 @@ export function UsernameForm() {
                     </div>
                     <h1 className="homepage-title">Lichess<span className="other-color">.</span>org Insights Generator<span className="other-color">.</span></h1>
                     <h3>Enter your <span><a href="https://lichess.org/" target="_blank">Lichess.org</a></span> account username, and get access to interesting insights from your last <span className="other-color">100 games</span>.</h3>
-                    <h3>If you do not have a lichess.org account, enter '<span className="other-color">melogm</span>' or '<span className="other-color">DrNykterstein</span>' (Account of Current World Champion - Magnus Carlsen!), for a demo.</h3>
+                    <h3>If you do not have a lichess.org account, enter '<span className="other-color">melogm</span>' (me!) or '<span className="other-color">DrNykterstein</span>' (Account of Current World Champion - Magnus Carlsen!), for a demo.</h3>
+                    <h3>Or, copy and paste any player from this top players list: <a href="https://lichess.org/player" target="_blank">Lichess Player Leaderboards</a></h3>
                     <TextField
                         required
                         id="enter-username-text" 

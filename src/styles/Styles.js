@@ -1,11 +1,18 @@
+// xxs => mobile
+// xs => ipad
+// sm => small laptop
+// md => laptop normal
+// lg => monitor
+// xl => large monitor 
+
 export const paperSx = {
     bgcolor: 'background.paper',
     height: {
         xxs: 70,
         xs: 60,
-        sm: 65,
-        md: 90,
-        lg: 130,
+        sm: 35,
+        md: 75,
+        lg: 95,
         xl: 160
     },
     padding: 2
@@ -16,9 +23,9 @@ export const paperSxLargeCol = {
     height: {
         xxs: 300,
         xs: 360,
-        sm: 450,
-        md: 600,
-        lg: 750,
+        sm: 375,
+        md: 550,
+        lg: 675,
         xl: 950
     },
     padding: 2

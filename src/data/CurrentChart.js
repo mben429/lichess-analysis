@@ -20,6 +20,7 @@ export default function CurrentChart(props) {
     let pointBorderWidth;
     let barxAxesDisplay;
     let barBorderWidth;
+    let borderRadius;
 
     console.log("PROPS: ", props.type, props.username, props.game_data, props.elo_array);
     
@@ -86,8 +87,6 @@ export default function CurrentChart(props) {
     // What needs to be responsive? 
     // xAxis title, yAxes title, label font size, label box size, chart width/height
     const setProgChartOptions = () => {
-
-        console.log("ARGS: ", axesTitleFontSize, axesFontSize, legendFontSize, legendBoxSize, lineWidth)
 
         let elo_prog_chart_options = {
             scales:{
@@ -205,7 +204,8 @@ export default function CurrentChart(props) {
             pointBorderWidth = 0.05;
             barxAxesDisplay = false;
             barThickness = 7;
-            barBorderWidth = 0.5;    
+            barBorderWidth = 0.5;
+            borderRadius = 10;
         }
 
         else if  (useMediaQuery(theme.breakpoints.between('xs', 'sm')) == true) {
@@ -218,6 +218,7 @@ export default function CurrentChart(props) {
             barxAxesDisplay = false;
             barThickness = 13;
             barBorderWidth = 0.5; 
+            borderRadius = 2;
         }
 
         else if(useMediaQuery(theme.breakpoints.between('sm', 'md')) == true) {
@@ -229,7 +230,8 @@ export default function CurrentChart(props) {
             pointBorderWidth = 0.5;
             barxAxesDisplay = false;
             barThickness = 20;
-            barBorderWidth = 1.25; 
+            barBorderWidth = 2; 
+            borderRadius = 2;
         }
         else if (useMediaQuery(theme.breakpoints.between('md', 'lg')) == true) {
             axesFontSize = 12;
@@ -241,6 +243,7 @@ export default function CurrentChart(props) {
             barxAxesDisplay = false;
             barThickness = 22;
             barBorderWidth = 1.25; 
+            borderRadius = 7;
         }
         else if (useMediaQuery(theme.breakpoints.between('lg', 'xl')) == true) {
             axesFontSize = 18;
@@ -252,6 +255,7 @@ export default function CurrentChart(props) {
             barxAxesDisplay = false;
             barThickness = 23;
             barBorderWidth = 1.25; 
+            borderRadius = 10;
         }
         else if (useMediaQuery(theme.breakpoints.up('xl')) == true) {
             axesFontSize = 24;
@@ -263,6 +267,7 @@ export default function CurrentChart(props) {
             barxAxesDisplay = false;
             barThickness = 32;
             barBorderWidth = 1.25; 
+            borderRadius = 10;
         }
 
     }
@@ -280,14 +285,14 @@ export default function CurrentChart(props) {
         }
         else if (props.type == "openings_white_bar") {
             return <Bar 
-                data={data.getWhiteOpeningsBarData(getOpeningsDataObj()[0], barThickness, barBorderWidth)} 
+                data={data.getWhiteOpeningsBarData(getOpeningsDataObj()[0], barThickness, barBorderWidth, borderRadius)} 
                 options={setOpeningsBarGraphOptions()} 
                 ref={chartRefWhite} 
                 onClick={handleBarClickWhite} />
         }
         else if (props.type == "openings_black_bar") {
             return <Bar 
-                data={data.getBlackOpeningsBarData(getOpeningsDataObj()[1], barThickness, barBorderWidth)} 
+                data={data.getBlackOpeningsBarData(getOpeningsDataObj()[1], barThickness, barBorderWidth, borderRadius)} 
                 options={setOpeningsBarGraphOptions()} 
                 ref={chartRefBlack} 
                 onClick={handleBarClickBlack} />
